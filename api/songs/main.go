@@ -41,10 +41,6 @@ func handler(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse
 		return handlers.GetSong(req, tableName, dynaClient)
 	case "POST":
 		return handlers.CreateSong(req, tableName, dynaClient)
-	case "PUT":
-		return handlers.UpdateSong(req, tableName, dynaClient)
-	case "DELETE":
-		return handlers.DeleteSong(req, tableName, dynaClient)
 	default:
 		return handlers.UnhandledMethod()
 	}

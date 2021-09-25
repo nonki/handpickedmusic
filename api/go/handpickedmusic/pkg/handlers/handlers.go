@@ -1,14 +1,7 @@
 package handlers
 
-import ()
-
-func test() string {
-	return "test"
-}
-package handlers
-
 import (
-	"github.com/nonki/handpickedmusic/pkg/user"
+	"github.com/nonki/handpickedmusic/pkg/song"
 	"net/http"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -22,32 +15,40 @@ type ErrorBody struct {
 	ErrorMsg *string `json:"error,omitempty"`
 }
 
-func GetSong(req events.APIGatewayProxyRequest, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (
+func GetSong(req events.APIGatewayProxyRequest, tableName string, client dynamodbiface.DynamoDBAPI) (
 	*events.APIGatewayProxyResponse,
 	error,
 ) {
-	return &events.APIGatewayProxyResponse{}, nil
+	id := req.QueryStringParameters["id"]
+	if len(id) > 0 {
+		result, err := user.FetchSong(id, tableName, client)
+		if err != nil {
+			return apiResponse(http.StatusBadRequest, ErrorBody{
+				aws.String(err.Error()),
+			})
+		}
+
+		return apiResponse(http.StatusOK, result)
+
+	}
+
+	return apiResponse(http.StatusBadRequest, ErrorBody{
+		"unsupported get request",
+	})
 }
 
-func CreateSong(req events.APIGatewayProxyRequest, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (
+func CreateSong(req events.APIGatewayProxyRequest, tableName string, client dynamodbiface.DynamoDBAPI) (
 	*events.APIGatewayProxyResponse,
 	error,
 ) {
-	return &events.APIGatewayProxyResponse{}, nil
-}
+	result, err := song.CreateSong(req, tableName, client)
+	if err != nil {
+		return apiResponse(http.StatusBadRequest, ErrorBody{
+			aws.String(err.Error()),
+		})
+	}
 
-func UpdateSong(req events.APIGatewayProxyRequest, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (
-	*events.APIGatewayProxyResponse,
-	error,
-) {
-	return &events.APIGatewayProxyResponse{}, nil
-}
-
-func DeleteSong(req events.APIGatewayProxyRequest, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (
-	*events.APIGatewayProxyResponse,
-	error,
-) {
-	return &events.APIGatewayProxyResponse{}, nil
+	return apiResponse(http.StatusCreated, result)
 }
 
 func UnhandledMethod() (*events.APIGatewayProxyResponse, error) {
