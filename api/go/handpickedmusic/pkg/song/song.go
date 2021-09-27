@@ -65,13 +65,13 @@ func FetchSong(id, tableName string, client dynamodbiface.DynamoDBAPI) (*Song, e
 	return item, nil
 }
 
-func CreateSong(req events.APIGatewayProxyRequest, tableName string, client dynamodbiface.DynamoDBAPI) (song, error) {
+func CreateSong(req events.APIGatewayProxyRequest, tableName string, client dynamodbiface.DynamoDBAPI) (*Song, error) {
 	var song Song
-	if err := json.Unmarshall([]byte(req.Body), &song); err != nil {
+	if err := json.Unmarshal([]byte(req.Body), &song); err != nil {
 		return nil, err
 	}
 
-	if !validators.isSongValid(song) {
+	if !IsSongValid(song) {
 		return nil, errors.New(ErrorSongInvalid)
 	}
 
@@ -95,5 +95,9 @@ func CreateSong(req events.APIGatewayProxyRequest, tableName string, client dyna
 		return nil, err
 	}
 
-	return nil
+	return nil, nil
+}
+
+func IsSongValid(song Song) bool {
+	return true
 }

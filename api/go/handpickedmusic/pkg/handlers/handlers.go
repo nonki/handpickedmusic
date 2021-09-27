@@ -21,7 +21,7 @@ func GetSong(req events.APIGatewayProxyRequest, tableName string, client dynamod
 ) {
 	id := req.QueryStringParameters["id"]
 	if len(id) > 0 {
-		result, err := user.FetchSong(id, tableName, client)
+		result, err := song.FetchSong(id, tableName, client)
 		if err != nil {
 			return apiResponse(http.StatusBadRequest, ErrorBody{
 				aws.String(err.Error()),
@@ -33,7 +33,7 @@ func GetSong(req events.APIGatewayProxyRequest, tableName string, client dynamod
 	}
 
 	return apiResponse(http.StatusBadRequest, ErrorBody{
-		"unsupported get request",
+		aws.String("unsupported get request"),
 	})
 }
 

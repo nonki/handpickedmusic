@@ -15,9 +15,6 @@ Resources:
           Properties:
             Path: /login
             Method: GET
-      Environment:
-        Variables:
-          PARAM1: VALUE
   SongsFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -25,12 +22,15 @@ Resources:
       Runtime: go1.x
       CodeUri: api/songs/
       Tracing: Active
+      Environment:
+        Variables:
+          DYNAMODB_ENDPOINT: http://localhost:8000
       Events:
         CatchAll:
           Type: Api
           Properties:
             Path: /songs
-            Method: ALL
+            Method: ANY
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM

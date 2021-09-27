@@ -1,8 +1,11 @@
 package main
 
 import (
-	"github.com/nonki/handpickedmusic/pkg/handlers"
 	"os"
+	"fmt"
+
+	"github.com/nonki/handpickedmusic/pkg/handlers"
+
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
@@ -17,14 +20,20 @@ var (
 
 func main() {
 	region := os.Getenv("AWS_REGION")
-	awsSession, err := session.NewSession(&aws.Config{
-		Region: aws.String(region)},
-	)
+	fmt.Printf("AWS_REGION: %s\n", region)
 
-	if os.Getenv("DYNAMODB_ENDPOINT") {
-		awsSession.Endpoint = os.Getenv("DYNAMODB_ENDPOINT")
+	config := &aws.Config{
+		Region: aws.String(region),
 	}
 
+	ep := os.Getenv("DYNAMODB_ENDPOINT")
+	fmt.Printf("DYNAMODB_ENDPOINT: %s\n", ep)
+
+	if len(os.Getenv("DYNAMODB_ENDPOINT")) != 0 {
+		config.Endpoint = aws.String(os.Getenv("DYNAMODB_ENDPOINT"))
+	}
+
+	awsSession, err := session.NewSession(config)
 	if err != nil {
 		return
 	}
@@ -44,4 +53,11 @@ func handler(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse
 	default:
 		return handlers.UnhandledMethod()
 	}
+}
+
+func apiResponse(msg string) (*events.APIGatewayProxyResponse, error) {
+	return &events.APIGatewayProxyResponse{
+		Body: msg,
+		StatusCode: 200,
+	}, nil
 }
