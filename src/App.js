@@ -9,6 +9,8 @@ import Input from '@mui/material/Input';
 import Typography from '@mui/material/Typography';
 import { createContext, useContext, useState, useMemo } from 'react';
 
+import Music from './Music.js';
+
 export const ColorModeContext = createContext({ setPrimaryColor: () => {}, setSecondaryColor: () => {} });
 
 const isValidColor = (color) => {
@@ -47,6 +49,7 @@ function App() {
           Submit
         </Button>
       </Container>
+      <Music />
     </Box>
   );
 }
