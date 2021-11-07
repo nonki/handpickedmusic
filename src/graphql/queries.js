@@ -1,6 +1,32 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const randomTrack = /* GraphQL */ `
+  query RandomTrack {
+    randomTrack {
+      id
+      name
+      spotifyId
+      artistID
+      artist {
+        id
+        spotifyId
+        tracks {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const debug = /* GraphQL */ `
+  query Debug {
+    debug
+  }
+`;
 export const getArtist = /* GraphQL */ `
   query GetArtist($id: ID!) {
     getArtist(id: $id) {
