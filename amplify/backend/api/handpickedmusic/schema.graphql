@@ -1,0 +1,13 @@
+type Track @model @auth(rules: [{allow: public}]) @key(name: "byArtist", fields: ["artistID"]) {
+  id: ID!
+  name: String!
+  artistID: ID!
+  albumName: String!
+}
+
+type Artist @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  Tracks: [Track] @connection(keyName: "byArtist", fields: ["id"])
+}
+ 

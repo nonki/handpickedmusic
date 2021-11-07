@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-handpickedmusic-staging-190549-authRole",
+      "UnauthRoleArn": "arn:aws:iam::234566038455:role/amplify-handpickedmusic-staging-190549-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::234566038455:role/amplify-handpickedmusic-staging-190549-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-handpickedmusic-staging-190549-deployment",
+      "UnauthRoleName": "amplify-handpickedmusic-staging-190549-unauthRole",
+      "StackName": "amplify-handpickedmusic-staging-190549",
+      "StackId": "arn:aws:cloudformation:eu-central-1:234566038455:stack/amplify-handpickedmusic-staging-190549/b87c1c60-3ffd-11ec-8a89-06f93a381b48",
+      "AmplifyAppId": "d305xcnh70myk1"
+    }
+  }
+}
