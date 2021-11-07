@@ -21,7 +21,7 @@
       "function": {
         "RandomTrack": {
           "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
-          "s3Key": "amplify-builds/RandomTrack-644d42305865494e7733-build.zip"
+          "s3Key": "amplify-builds/RandomTrack-387a69336e745870534a-build.zip"
         }
       }
     }
