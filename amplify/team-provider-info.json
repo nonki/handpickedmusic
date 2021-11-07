@@ -1,15 +1,15 @@
 {
-  "staging": {
+  "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-handpickedmusic-staging-190549-authRole",
-      "UnauthRoleArn": "arn:aws:iam::234566038455:role/amplify-handpickedmusic-staging-190549-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::234566038455:role/amplify-handpickedmusic-staging-190549-authRole",
+      "AuthRoleName": "amplify-handpickedmusic-dev-204151-authRole",
+      "UnauthRoleArn": "arn:aws:iam::234566038455:role/amplify-handpickedmusic-dev-204151-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::234566038455:role/amplify-handpickedmusic-dev-204151-authRole",
       "Region": "eu-central-1",
-      "DeploymentBucketName": "amplify-handpickedmusic-staging-190549-deployment",
-      "UnauthRoleName": "amplify-handpickedmusic-staging-190549-unauthRole",
-      "StackName": "amplify-handpickedmusic-staging-190549",
-      "StackId": "arn:aws:cloudformation:eu-central-1:234566038455:stack/amplify-handpickedmusic-staging-190549/b87c1c60-3ffd-11ec-8a89-06f93a381b48",
-      "AmplifyAppId": "d305xcnh70myk1"
+      "DeploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
+      "UnauthRoleName": "amplify-handpickedmusic-dev-204151-unauthRole",
+      "StackName": "amplify-handpickedmusic-dev-204151",
+      "StackId": "arn:aws:cloudformation:eu-central-1:234566038455:stack/amplify-handpickedmusic-dev-204151/24c4d4e0-400b-11ec-b165-0add97c6ff3e",
+      "AmplifyAppId": "d2ik45pjro9i5h"
     }
   }
 }

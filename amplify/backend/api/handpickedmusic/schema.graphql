@@ -1,13 +1,13 @@
-type Track @model @auth(rules: [{allow: public}]) @key(name: "byArtist", fields: ["artistID"]) {
+type Artist @model {
   id: ID!
-  name: String!
-  artistID: ID!
-  albumName: String!
+  spotifyId: String!
+  tracks: [Track] @connection(keyName: "byArtist", fields: ["id"])
 }
 
-type Artist @model @auth(rules: [{allow: public}]) {
+type Track @model @key(name: "byArtist", fields: ["artistID"]) {
   id: ID!
   name: String!
-  Tracks: [Track] @connection(keyName: "byArtist", fields: ["id"])
+  spotifyId: String!
+  artistID: ID!
+  artist: Artist @connection(fields: ["artistID"])
 }
- 
