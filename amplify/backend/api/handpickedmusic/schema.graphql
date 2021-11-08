@@ -1,6 +1,5 @@
 type Query {
-  randomTrack: Track @function(name: "RandomTrack-${env}")
-  debug: String @function(name: "RandomTrack-${env}")
+  randomTrack: String @function(name: "RandomTrack-${env}")
 }
 
 type Artist @model {

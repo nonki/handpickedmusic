@@ -1,31 +1,27 @@
 import React, { useEffect, useState  } from 'react'
 import { API, graphqlOperation  } from 'aws-amplify'
-import { listArtists } from './graphql/queries';
+import { randomTrack, getTrack } from './graphql/queries';
 
 const Music = () => {
-  const [artists, setArtists] = useState([])
+  const [track, setTrack] = useState([])
 
   useEffect(() => {
-    fetchArtists()
+    fetchRandomTrack()
   }, [])
 
-  async function fetchArtists() {
+  async function fetchRandomTrack() {
     try {
-      const artistData = await API.graphql(graphqlOperation(listArtists))
-      const artists = artistData.data.listArtists.items
-      setArtists(artists)
-    } catch (err) { console.log('error fetching artists'); console.log(err) }
+      const randomTrackData = await API.graphql(graphqlOperation(randomTrack))
+      const randomTrackId = randomTrackData.data.randomTrack
+      const randomTrackObj = await API.graphql(graphqlOperation(getTrack, randomTrackId))
+      setTrack(randomTrackObj)
+    } catch (err) { console.log('error fetching random track'); console.log(err) }
   }
 
   return (
     <div>
-      {
-        artists.map((artist, index) => (
-          <div key={artist.id ? artist.id : index}>
-            <p>{artist.spotifyId}</p>
-          </div>
-        ))
-      }
+      <p>{track.name}</p>
+      <p>{track.id}</p>
     </div>
   )
 }

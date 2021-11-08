@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import { createContext, useContext, useState, useMemo } from 'react';
 
 import Music from './Music.js';
-import Debug from './Debug.js';
 
 export const ColorModeContext = createContext({ setPrimaryColor: () => {}, setSecondaryColor: () => {} });
 
@@ -51,7 +50,6 @@ function App() {
         </Button>
       </Container>
       <Music />
-      <Debug />
     </Box>
   );
 }

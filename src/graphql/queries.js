@@ -3,28 +3,7 @@
 
 export const randomTrack = /* GraphQL */ `
   query RandomTrack {
-    randomTrack {
-      id
-      name
-      spotifyId
-      artistID
-      artist {
-        id
-        spotifyId
-        tracks {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const debug = /* GraphQL */ `
-  query Debug {
-    debug
+    randomTrack
   }
 `;
 export const getArtist = /* GraphQL */ `
