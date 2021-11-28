@@ -19,10 +19,6 @@
         }
       },
       "function": {
-        "RandomTrack": {
-          "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
-          "s3Key": "amplify-builds/RandomTrack-6a794966315331745443-build.zip"
-        },
         "GetDailyMusic": {
           "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
           "s3Key": "amplify-builds/GetDailyMusic-6e57525155596c516451-build.zip"

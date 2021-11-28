@@ -25,22 +25,6 @@
     }
   },
   "function": {
-    "RandomTrack": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "handpickedmusic",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ]
-        }
-      ]
-    },
     "GetDailyMusic": {
       "build": true,
       "providerPlugin": "awscloudformation",
