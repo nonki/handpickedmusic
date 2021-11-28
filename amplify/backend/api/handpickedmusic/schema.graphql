@@ -2,16 +2,8 @@ type Query {
   randomTrack: String @function(name: "RandomTrack-${env}")
 }
 
-type Artist @model {
+type Track @model {
   id: ID!
   spotifyId: String!
-  tracks: [Track] @connection(keyName: "byArtist", fields: ["id"])
-}
-
-type Track @model @key(name: "byArtist", fields: ["artistID"]) {
-  id: ID!
-  name: String!
-  spotifyId: String!
-  artistID: ID!
-  artist: Artist @connection(fields: ["artistID"])
+  colorHex: String @function(name: "ProminentColour-${env}")
 }
