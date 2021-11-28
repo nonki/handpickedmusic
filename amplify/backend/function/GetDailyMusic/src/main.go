@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"math/rand"
 	"os"
 	"time"
@@ -25,7 +26,7 @@ func HandleRequest(ctx context.Context) (string, error) {
 
 	req := graphql.NewRequest(`
 	query myQuery {
-		queryTracks(filter: { not { has: date } }) {
+		listTracks(filter: {date: {notContains: ""}}) {
 			items {
 				id
 			}
@@ -34,9 +35,9 @@ func HandleRequest(ctx context.Context) (string, error) {
 	`)
 
 	var respData struct {
-		QueryTracks struct {
+		ListTracks struct {
 			Items []Track `json:"items"`
-		} `json:"queryTracks"`
+		} `json:"listTracks"`
 	}
 
 	req.Header.Set("X-API-KEY", os.Getenv("API_HANDPICKEDMUSIC_GRAPHQLAPIKEYOUTPUT"))
@@ -45,12 +46,16 @@ func HandleRequest(ctx context.Context) (string, error) {
 		return "", err
 	}
 
-	tracks := respData.QueryTracks.Items
+	tracks := respData.ListTracks.Items
+	if len(tracks) == 0 {
+		return "", errors.New("No tracks found")
+	}
+
 	seed := rand.NewSource(time.Now().UnixNano())
 	seededRand := rand.New(seed)
 	randomIndex := seededRand.Intn(len(tracks))
 
-	return respData.QueryTracks.Items[randomIndex].ID, nil
+	return tracks[randomIndex].ID, nil
 }
 
 func main() {

@@ -12,7 +12,6 @@ export const enrichTrack = /* GraphQL */ `
       id
       colorHex
       spotifyId
-      date
       trackName
       artistName
       albumName
@@ -57,7 +56,6 @@ export const getMusic = /* GraphQL */ `
       id
       colorHex
       spotifyId
-      date
       trackName
       artistName
       albumName
@@ -78,7 +76,6 @@ export const listMusics = /* GraphQL */ `
         id
         colorHex
         spotifyId
-        date
         trackName
         artistName
         albumName

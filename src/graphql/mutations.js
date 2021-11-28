@@ -52,7 +52,6 @@ export const createMusic = /* GraphQL */ `
       id
       colorHex
       spotifyId
-      date
       trackName
       artistName
       albumName
@@ -71,7 +70,6 @@ export const updateMusic = /* GraphQL */ `
       id
       colorHex
       spotifyId
-      date
       trackName
       artistName
       albumName
@@ -90,7 +88,6 @@ export const deleteMusic = /* GraphQL */ `
       id
       colorHex
       spotifyId
-      date
       trackName
       artistName
       albumName
