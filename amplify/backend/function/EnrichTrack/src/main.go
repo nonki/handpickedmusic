@@ -22,10 +22,16 @@ import (
 )
 
 type Event struct {
+	Field     string       `json:"fieldName"`
+	Arguments argumentsObj `json:"arguments"`
+}
+
+type argumentsObj struct {
 	SpotifyID spotify.ID `json:"spotifyId"`
 }
 
 type EnrichedTrack struct {
+	ID         spotify.ID `json:"id"`
 	ColorHex   string     `json:"colorHex"`
 	SpotifyID  spotify.ID `json:"spotifyId"`
 	TrackName  string     `json:"trackName"`
@@ -40,9 +46,9 @@ func HandleRequest(ctx context.Context, req Event) (*EnrichedTrack, error) {
 		return nil, errors.Wrap(err, "error getting spotfy client")
 	}
 
-	track, err := client.GetTrack(req.SpotifyID)
+	track, err := client.GetTrack(req.Arguments.SpotifyID)
 	if err != nil {
-		return nil, errors.Wrap(err, "error getting spotify track")
+		return nil, errors.Wrap(err, fmt.Sprintf("error getting spotify track %s", req.Arguments.SpotifyID))
 	}
 
 	enrichedTrack := enrichTrack(track)
@@ -62,6 +68,7 @@ func enrichTrack(track *spotify.FullTrack) EnrichedTrack {
 	}
 
 	return EnrichedTrack{
+		ID:         track.ID,
 		SpotifyID:  track.ID,
 		ColorHex:   colorHex,
 		TrackName:  track.Name,
