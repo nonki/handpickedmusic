@@ -25,10 +25,12 @@
         },
         "GetDailyMusic": {
           "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
-          "s3Key": "amplify-builds/GetDailyMusic-5075366a476e45415644-build.zip"
+          "s3Key": "amplify-builds/GetDailyMusic-6e57525155596c516451-build.zip"
         },
         "EnrichTrack": {
-          "secretsPathAmplifyAppId": "d2ik45pjro9i5h"
+          "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
+          "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
+          "s3Key": "amplify-builds/EnrichTrack-784a6b393867436d5239-build.zip"
         }
       }
     }
