@@ -1,78 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createArtist = /* GraphQL */ `
-  mutation CreateArtist(
-    $input: CreateArtistInput!
-    $condition: ModelArtistConditionInput
-  ) {
-    createArtist(input: $input, condition: $condition) {
-      id
-      spotifyId
-      tracks {
-        items {
-          id
-          name
-          spotifyId
-          artistID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateArtist = /* GraphQL */ `
-  mutation UpdateArtist(
-    $input: UpdateArtistInput!
-    $condition: ModelArtistConditionInput
-  ) {
-    updateArtist(input: $input, condition: $condition) {
-      id
-      spotifyId
-      tracks {
-        items {
-          id
-          name
-          spotifyId
-          artistID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteArtist = /* GraphQL */ `
-  mutation DeleteArtist(
-    $input: DeleteArtistInput!
-    $condition: ModelArtistConditionInput
-  ) {
-    deleteArtist(input: $input, condition: $condition) {
-      id
-      spotifyId
-      tracks {
-        items {
-          id
-          name
-          spotifyId
-          artistID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createTrack = /* GraphQL */ `
   mutation CreateTrack(
     $input: CreateTrackInput!
@@ -80,18 +8,8 @@ export const createTrack = /* GraphQL */ `
   ) {
     createTrack(input: $input, condition: $condition) {
       id
-      name
       spotifyId
-      artistID
-      artist {
-        id
-        spotifyId
-        tracks {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      date
       createdAt
       updatedAt
     }
@@ -104,18 +22,8 @@ export const updateTrack = /* GraphQL */ `
   ) {
     updateTrack(input: $input, condition: $condition) {
       id
-      name
       spotifyId
-      artistID
-      artist {
-        id
-        spotifyId
-        tracks {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      date
       createdAt
       updatedAt
     }
@@ -128,18 +36,65 @@ export const deleteTrack = /* GraphQL */ `
   ) {
     deleteTrack(input: $input, condition: $condition) {
       id
-      name
       spotifyId
-      artistID
-      artist {
-        id
-        spotifyId
-        tracks {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createMusic = /* GraphQL */ `
+  mutation CreateMusic(
+    $input: CreateMusicInput!
+    $condition: ModelMusicConditionInput
+  ) {
+    createMusic(input: $input, condition: $condition) {
+      id
+      colorHex
+      spotifyId
+      date
+      trackName
+      artistName
+      albumName
+      previewUrl
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMusic = /* GraphQL */ `
+  mutation UpdateMusic(
+    $input: UpdateMusicInput!
+    $condition: ModelMusicConditionInput
+  ) {
+    updateMusic(input: $input, condition: $condition) {
+      id
+      colorHex
+      spotifyId
+      date
+      trackName
+      artistName
+      albumName
+      previewUrl
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMusic = /* GraphQL */ `
+  mutation DeleteMusic(
+    $input: DeleteMusicInput!
+    $condition: ModelMusicConditionInput
+  ) {
+    deleteMusic(input: $input, condition: $condition) {
+      id
+      colorHex
+      spotifyId
+      date
+      trackName
+      artistName
+      albumName
+      previewUrl
       createdAt
       updatedAt
     }

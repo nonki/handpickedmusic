@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "api": {
+      "handpickedmusic": [
+        "Query",
+        "Mutation"
+      ]
+    },
+    "storage": {
+      "Track:@model(appsync)": [
+        "create",
+        "read",
+        "update"
+      ],
+      "Music:@model(appsync)": [
+        "create",
+        "read",
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

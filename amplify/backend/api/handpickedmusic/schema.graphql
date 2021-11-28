@@ -1,9 +1,19 @@
 type Query {
-  randomTrack: String @function(name: "RandomTrack-${env}")
+  getDailyTrack: String @function(name: "GetDailyMusic-${env}")
+  enrichTrack(spotifyId: String): Music @function(name: "EnrichTrack-${env}")
 }
 
 type Track @model {
   id: ID!
   spotifyId: String!
-  colorHex: String @function(name: "ProminentColour-${env}")
+  date: AWSDate
+}
+
+type Music @model {
+  colorHex: String!
+  spotifyId: String!
+  trackName: String!
+  artistName: String!
+  albumName: String!
+  previewUrl: String!
 }
