@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { API, graphqlOperation  } from 'aws-amplify'
-import { enrichTrack } from './graphql/queries';
+import { getDailyTrack, enrichTrack } from './graphql/queries';
 
 import { TrackContext } from './App.js';
 
@@ -15,13 +15,11 @@ const Music = () => {
   useEffect(() => {
     async function fetchEnrichedTrack(trackId) {
       try {
-        //let trackId = ""
-        //if (context.trackId !== "") {
-        //  trackId = context.trackId
-        //} else {
-        //  const dailyTrackData = await API.graphql(graphqlOperation(getDailyTrack))
-        //  trackId = dailyTrackData.data.getDailyTrack
-        //}
+        if (trackId === "") {
+          const dailyTrackData = await API.graphql(graphqlOperation(getDailyTrack))
+          trackId = dailyTrackData.data.getDailyTrack
+        }
+
         console.log(trackId)
         const enrichedTrack = await API.graphql(graphqlOperation(enrichTrack, {spotifyId: trackId}))
         console.log(enrichedTrack)

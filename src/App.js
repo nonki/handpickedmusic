@@ -9,10 +9,11 @@ import { createContext, useContext, useState, useMemo } from 'react';
 import Music from './Music.js';
 import Upload from './Upload.js';
 
-export const TrackContext = createContext({ track: {}, trackId: '', setTrackId: () => {}, setTrack: () => {} });
+export const TrackContext = createContext({ track: {}, trackId: '', preview: false, setTrackId: () => {}, setTrack: () => {}, setPreview: () => {} });
 
 function App() {
   const context = useContext(TrackContext);
+  let cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)admin\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 
   return (
     <Box
@@ -28,7 +29,7 @@ function App() {
         height: '100%',
         width: '100%',
       }}>
-      <Upload />
+      {cookieValue && <Upload />}
       <Container
         sx={{
           position: 'absolute',
@@ -49,18 +50,24 @@ const TrackThemedApp = () => {
   const [track, setTrack] = useState({})
   const [primaryColor, setPrimaryColor] = useState('#4abadf');
   const [secondaryColor, setSecondaryColor] = useState('#df704a');
+  const [preview, setPreview] = useState(false);
+
   const trackFn = useMemo(
     () => ({
       track: track,
       trackId: trackId,
+      preview: preview,
       setTrack: (track) => {
         setTrack(track)
       },
       setTrackId: (trackId) => {
         setTrackId(trackId)
+      },
+      setPreview: (preview) => {
+        setPreview(preview)
       }
     }),
-    [track, trackId]
+    [track, trackId, preview]
   );
 
   useMemo(() => setPrimaryColor(`#${track.colorHex || "4abadf"}`), [track])
