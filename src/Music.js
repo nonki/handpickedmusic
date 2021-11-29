@@ -8,6 +8,7 @@ import { API, graphqlOperation  } from 'aws-amplify'
 import { getDailyTrack, enrichTrack } from './graphql/queries';
 
 import { TrackContext } from './App.js';
+import Player from './Player';
 
 
 const Music = () => {
@@ -61,6 +62,9 @@ const Music = () => {
           <Typography sx={{p: 4}} variant='h2' color="textPrimary">
             DAILY TRACK
           </Typography>
+
+          <Player url={track.previewUrl} />
+
           <img src={track.imageUrl} alt="album art" height="300" width="300" />
 
           <Typography variant='p' color="textPrimary" sx={{ p: 4 }}>
