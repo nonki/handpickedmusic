@@ -20,4 +20,5 @@ type Music @model {
   albumName: String!
   imageUrl: String!
   previewUrl: String!
+  externalUrl: String!
 }

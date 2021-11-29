@@ -31,14 +31,15 @@ type argumentsObj struct {
 }
 
 type EnrichedTrack struct {
-	ID         spotify.ID `json:"id"`
-	ColorHex   string     `json:"colorHex"`
-	SpotifyID  spotify.ID `json:"spotifyId"`
-	TrackName  string     `json:"trackName"`
-	ArtistName string     `json:"artistName"`
-	AlbumName  string     `json:"albumName"`
-	ImageURL   string     `json:"imageUrl"`
-	PreviewURL string     `json:"previewUrl"`
+	ID          spotify.ID `json:"id"`
+	ColorHex    string     `json:"colorHex"`
+	SpotifyID   spotify.ID `json:"spotifyId"`
+	TrackName   string     `json:"trackName"`
+	ArtistName  string     `json:"artistName"`
+	AlbumName   string     `json:"albumName"`
+	ImageURL    string     `json:"imageUrl"`
+	PreviewURL  string     `json:"previewUrl"`
+	ExternalURL string     `json:"externalUrl"`
 }
 
 func HandleRequest(ctx context.Context, req Event) (*EnrichedTrack, error) {
@@ -69,14 +70,15 @@ func enrichTrack(track *spotify.FullTrack) EnrichedTrack {
 	}
 
 	return EnrichedTrack{
-		ID:         track.ID,
-		SpotifyID:  track.ID,
-		ColorHex:   colorHex,
-		TrackName:  track.Name,
-		ArtistName: strings.Join(artists, " & "),
-		AlbumName:  track.Album.Name,
-		ImageURL:   track.Album.Images[0].URL,
-		PreviewURL: track.PreviewURL,
+		ID:          track.ID,
+		SpotifyID:   track.ID,
+		ColorHex:    colorHex,
+		TrackName:   track.Name,
+		ArtistName:  strings.Join(artists, " & "),
+		AlbumName:   track.Album.Name,
+		ImageURL:    track.Album.Images[0].URL,
+		PreviewURL:  track.PreviewURL,
+		ExternalURL: track.ExternalURLs["spotify"],
 	}
 }
 
