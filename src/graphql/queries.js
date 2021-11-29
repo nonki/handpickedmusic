@@ -19,6 +19,7 @@ export const enrichTrack = /* GraphQL */ `
       albumName
       imageUrl
       previewUrl
+      externalUrl
     }
   }
 `;
@@ -64,6 +65,7 @@ export const getMusic = /* GraphQL */ `
       albumName
       imageUrl
       previewUrl
+      externalUrl
     }
   }
 `;
@@ -85,6 +87,7 @@ export const listMusics = /* GraphQL */ `
         albumName
         imageUrl
         previewUrl
+        externalUrl
       }
       nextToken
     }

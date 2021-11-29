@@ -4,7 +4,7 @@ import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/s
 import Color from 'color';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import { createContext, useContext, useState, useMemo } from 'react';
+import { createContext, useState, useMemo } from 'react';
 
 import Music from './Music.js';
 import Upload from './Upload.js';
@@ -12,8 +12,7 @@ import Upload from './Upload.js';
 export const TrackContext = createContext({ track: {}, trackId: '', preview: false, setTrackId: () => {}, setTrack: () => {}, setPreview: () => {} });
 
 function App() {
-  const context = useContext(TrackContext);
-  let cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)admin\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+  let cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)admin\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
   return (
     <Box

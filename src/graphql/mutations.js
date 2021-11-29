@@ -59,6 +59,7 @@ export const createMusic = /* GraphQL */ `
       albumName
       imageUrl
       previewUrl
+      externalUrl
     }
   }
 `;
@@ -78,6 +79,7 @@ export const updateMusic = /* GraphQL */ `
       albumName
       imageUrl
       previewUrl
+      externalUrl
     }
   }
 `;
@@ -97,6 +99,7 @@ export const deleteMusic = /* GraphQL */ `
       albumName
       imageUrl
       previewUrl
+      externalUrl
     }
   }
 `;

@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react'
 import Container from '@mui/material/Container';
+import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
@@ -57,16 +58,19 @@ const Music = () => {
           alignContent: 'center',
           alignItems: 'center',
         }}>
-          <Typography variant='h2' color="textPrimary">
+          <Typography sx={{p: 4}} variant='h2' color="textPrimary">
             DAILY TRACK
           </Typography>
           <img src={track.imageUrl} alt="album art" height="300" width="300" />
 
-          <Typography variant='p' color="textPrimary">
+          <Typography variant='p' color="textPrimary" sx={{ p: 4 }}>
             <b>{track.trackName.toUpperCase()}</b>
             <br />
             {track.artistName.toLowerCase()}
           </Typography>
+          <Link href={track.externalUrl} color="textPrimary" underline="hover">
+            OPEN IN SPOTIFY
+          </Link>
         </Stack>
       </Fade>
     </Container>

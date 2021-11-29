@@ -47,6 +47,7 @@ export const onCreateMusic = /* GraphQL */ `
       albumName
       imageUrl
       previewUrl
+      externalUrl
     }
   }
 `;
@@ -63,6 +64,7 @@ export const onUpdateMusic = /* GraphQL */ `
       albumName
       imageUrl
       previewUrl
+      externalUrl
     }
   }
 `;
@@ -79,6 +81,7 @@ export const onDeleteMusic = /* GraphQL */ `
       albumName
       imageUrl
       previewUrl
+      externalUrl
     }
   }
 `;
