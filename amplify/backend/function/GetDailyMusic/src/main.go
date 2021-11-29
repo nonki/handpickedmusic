@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"math/rand"
+	"net/http"
 	"os"
 	"time"
 
@@ -23,7 +24,7 @@ type Track struct {
 
 // HandleRequest handles a request
 func HandleRequest(ctx context.Context) (string, error) {
-	client := graphql.NewClient(os.Getenv("API_HANDPICKEDMUSIC_GRAPHQLAPIENDPOINTOUTPUT"))
+	client := newGraphqlClient()
 	if track, err := getDailyTrack(ctx, client); track != nil {
 		return track.SpotifyID, err
 	}
@@ -39,6 +40,17 @@ func HandleRequest(ctx context.Context) (string, error) {
 	}
 
 	return track.SpotifyID, nil
+}
+
+func newGraphqlClient() *graphql.Client {
+	httpClient := &http.Client{
+		Timeout: 2 * time.Second,
+	}
+
+	return graphql.NewClient(
+		os.Getenv("API_HANDPICKEDMUSIC_GRAPHQLAPIENDPOINTOUTPUT"),
+		graphql.WithHTTPClient(httpClient),
+	)
 }
 
 func getAllUnscheduledTracks(ctx context.Context, client *graphql.Client) ([]Track, error) {
