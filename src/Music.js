@@ -63,9 +63,10 @@ const Music = () => {
             DAILY TRACK
           </Typography>
 
+          <img src={track.imageUrl} alt="album art" height="300" width="300" />
+
           <Player url={track.previewUrl} />
 
-          <img src={track.imageUrl} alt="album art" height="300" width="300" />
 
           <Typography variant='p' color="textPrimary" sx={{ p: 4 }}>
             <b>{track.trackName.toUpperCase()}</b>

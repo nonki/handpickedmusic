@@ -6,7 +6,7 @@ import PlayArrow from '@mui/icons-material/PlayArrow';
 import VolumeSlider from './VolumeSlider.js';
 
 const useAudio = url => {
-  const [audio] = useState(new Audio(url));
+  const [audio, setAudio] = useState(new Audio(url));
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.1);
 
@@ -19,6 +19,11 @@ const useAudio = url => {
   audio.volume = volume
 
   const toggle = () => setPlaying(!playing);
+
+  useEffect(() => {
+    setPlaying(false)
+    setAudio(new Audio(url))
+  }, [url])
 
   const setAudioVolume = (newVolume) => {
     const audioVolume = newVolume / 100;
@@ -47,7 +52,7 @@ const Player = ({ url }) => {
     <Stack direction="row" spacing="2" alignItems="center" sx={{ m: 1, minWidth: 300 }}>
       <IconButton
         onClick={toggle}>
-        {playing ? <Pause color="secondary"/> : <PlayArrow color="secondary"/>}
+        {playing ? <Pause color="textSecondary"/> : <PlayArrow color="textSecondary"/>}
       </IconButton>
       <VolumeSlider
         defaultValue={volume * 100}
