@@ -1,27 +1,31 @@
 import React, { useEffect, useState  } from 'react'
 import { API, graphqlOperation  } from 'aws-amplify'
-import { randomTrack, getTrack } from './graphql/queries';
+import { getDailyTrack, enrichTrack } from './graphql/queries';
 
 const Music = () => {
   const [track, setTrack] = useState([])
 
   useEffect(() => {
-    fetchRandomTrack()
+    fetchEnrichedTrack()
   }, [])
 
-  async function fetchRandomTrack() {
+  async function fetchEnrichedTrack() {
     try {
-      const randomTrackData = await API.graphql(graphqlOperation(randomTrack))
-      const randomTrackId = randomTrackData.data.randomTrack
-      const randomTrackObj = await API.graphql(graphqlOperation(getTrack, randomTrackId))
-      setTrack(randomTrackObj)
+      const dailyTrackData = await API.graphql(graphqlOperation(getDailyTrack))
+      const dailyTrackId = dailyTrackData.data.getDailyTrack
+      const dailyEnrichedTrack = await API.graphql(graphqlOperation(enrichTrack, dailyTrackId))
+      setTrack(dailyEnrichedTrack)
     } catch (err) { console.log('error fetching random track'); console.log(err) }
   }
 
   return (
     <div>
-      <p>{track.name}</p>
-      <p>{track.id}</p>
+      <p>{track.trackName}</p>
+      <p>{track.colorHex}</p>
+      <p>{track.spotifyId}</p>
+      <p>{track.artistName}</p>
+      <p>{track.albumName}</p>
+      <p>{track.previewUrl}</p>
     </div>
   )
 }
