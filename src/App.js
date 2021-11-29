@@ -35,7 +35,8 @@ function App() {
           position: 'absolute',
           justifyContent: 'center',
           alignItems: 'center',
-          top: '30%',
+          transform: 'translate(0%, -50%)',
+          top: '50%',
         }}
       >
         <Music />

@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react'
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
+import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import { API, graphqlOperation  } from 'aws-amplify'
 import { getDailyTrack, enrichTrack } from './graphql/queries';
@@ -36,7 +37,6 @@ const Music = () => {
   if (!track.trackName) {
     return (
       <div>
-        <p>No Track</p>
       </div>
     )
   }
@@ -48,24 +48,27 @@ const Music = () => {
         alignContent: 'center',
         alignItems: 'center',
       }}>
+      <Fade
+        in={true}
+        timeout={1000} >
+        <Stack
+        sx={{
+          justifyContent: 'center',
+          alignContent: 'center',
+          alignItems: 'center',
+        }}>
+          <Typography variant='h2' color="textPrimary">
+            DAILY TRACK
+          </Typography>
+          <img src={track.imageUrl} alt="album art" height="300" width="300" />
 
-      <Stack
-      sx={{
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
-      }}>
-        <Typography variant='h2' color="textPrimary">
-          DAILY TRACK
-        </Typography>
-        <img src={track.imageUrl} alt="album art" height="300" width="300" />
-
-        <Typography variant='p' color="textPrimary">
-          <b>{track.trackName.toUpperCase()}</b>
-          <br />
-          {track.artistName.toLowerCase()}
-        </Typography>
-      </Stack>
+          <Typography variant='p' color="textPrimary">
+            <b>{track.trackName.toUpperCase()}</b>
+            <br />
+            {track.artistName.toLowerCase()}
+          </Typography>
+        </Stack>
+      </Fade>
     </Container>
   )
 }
