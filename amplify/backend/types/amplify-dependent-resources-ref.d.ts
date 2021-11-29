@@ -6,12 +6,6 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "function": {
-        "RandomTrack": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
         "GetDailyMusic": {
             "Name": "string",
             "Arn": "string",

@@ -51,13 +51,14 @@ export const createMusic = /* GraphQL */ `
     createMusic(input: $input, condition: $condition) {
       id
       colorHex
+      createdAt
+      updatedAt
       spotifyId
       trackName
       artistName
       albumName
+      imageUrl
       previewUrl
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -69,13 +70,14 @@ export const updateMusic = /* GraphQL */ `
     updateMusic(input: $input, condition: $condition) {
       id
       colorHex
+      createdAt
+      updatedAt
       spotifyId
       trackName
       artistName
       albumName
+      imageUrl
       previewUrl
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -87,13 +89,14 @@ export const deleteMusic = /* GraphQL */ `
     deleteMusic(input: $input, condition: $condition) {
       id
       colorHex
+      createdAt
+      updatedAt
       spotifyId
       trackName
       artistName
       albumName
+      imageUrl
       previewUrl
-      createdAt
-      updatedAt
     }
   }
 `;

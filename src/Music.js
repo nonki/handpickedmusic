@@ -1,32 +1,74 @@
-import React, { useEffect, useState  } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { API, graphqlOperation  } from 'aws-amplify'
-import { getDailyTrack, enrichTrack } from './graphql/queries';
+import { enrichTrack } from './graphql/queries';
+
+import { TrackContext } from './App.js';
+
 
 const Music = () => {
-  const [track, setTrack] = useState([])
+  const context = useContext(TrackContext);
+  const [track, setTrack] = useState({})
 
   useEffect(() => {
-    fetchEnrichedTrack()
-  }, [])
+    async function fetchEnrichedTrack(trackId) {
+      try {
+        //let trackId = ""
+        //if (context.trackId !== "") {
+        //  trackId = context.trackId
+        //} else {
+        //  const dailyTrackData = await API.graphql(graphqlOperation(getDailyTrack))
+        //  trackId = dailyTrackData.data.getDailyTrack
+        //}
+        console.log(trackId)
+        const enrichedTrack = await API.graphql(graphqlOperation(enrichTrack, {spotifyId: trackId}))
+        console.log(enrichedTrack)
 
-  async function fetchEnrichedTrack() {
-    try {
-      const dailyTrackData = await API.graphql(graphqlOperation(getDailyTrack))
-      const dailyTrackId = dailyTrackData.data.getDailyTrack
-      const dailyEnrichedTrack = await API.graphql(graphqlOperation(enrichTrack, dailyTrackId))
-      setTrack(dailyEnrichedTrack)
-    } catch (err) { console.log('error fetching random track'); console.log(err) }
+        setTrack(enrichedTrack.data.enrichTrack)
+        context.setTrack(enrichedTrack.data.enrichTrack)
+      } catch (err) { console.log('error fetching random track'); console.log(err) }
+    }
+
+    console.log("Running memo with " + context.trackId)
+    fetchEnrichedTrack(context.trackId)
+  }, [context.trackId])
+
+  if (!track.trackName) {
+    return (
+      <div>
+        <p>No Track</p>
+      </div>
+    )
   }
 
   return (
-    <div>
-      <p>{track.trackName}</p>
-      <p>{track.colorHex}</p>
-      <p>{track.spotifyId}</p>
-      <p>{track.artistName}</p>
-      <p>{track.albumName}</p>
-      <p>{track.previewUrl}</p>
-    </div>
+    <Container
+      sx={{
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+      }}>
+
+      <Stack
+      sx={{
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+      }}>
+        <Typography variant='h2' color="textPrimary">
+          DAILY TRACK
+        </Typography>
+        <img src={track.imageUrl} alt="album art" height="300" width="300" />
+
+        <Typography variant='p' color="textPrimary">
+          <b>{track.trackName.toUpperCase()}</b>
+          <br />
+          {track.artistName.toLowerCase()}
+        </Typography>
+      </Stack>
+    </Container>
   )
 }
 

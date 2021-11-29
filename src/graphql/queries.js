@@ -11,13 +11,14 @@ export const enrichTrack = /* GraphQL */ `
     enrichTrack(spotifyId: $spotifyId) {
       id
       colorHex
+      createdAt
+      updatedAt
       spotifyId
       trackName
       artistName
       albumName
+      imageUrl
       previewUrl
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -55,13 +56,14 @@ export const getMusic = /* GraphQL */ `
     getMusic(id: $id) {
       id
       colorHex
+      createdAt
+      updatedAt
       spotifyId
       trackName
       artistName
       albumName
+      imageUrl
       previewUrl
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -75,13 +77,14 @@ export const listMusics = /* GraphQL */ `
       items {
         id
         colorHex
+        createdAt
+        updatedAt
         spotifyId
         trackName
         artistName
         albumName
+        imageUrl
         previewUrl
-        createdAt
-        updatedAt
       }
       nextToken
     }

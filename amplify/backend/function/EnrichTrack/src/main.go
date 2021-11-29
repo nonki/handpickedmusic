@@ -37,6 +37,7 @@ type EnrichedTrack struct {
 	TrackName  string     `json:"trackName"`
 	ArtistName string     `json:"artistName"`
 	AlbumName  string     `json:"albumName"`
+	ImageURL   string     `json:"imageUrl"`
 	PreviewURL string     `json:"previewUrl"`
 }
 
@@ -74,6 +75,7 @@ func enrichTrack(track *spotify.FullTrack) EnrichedTrack {
 		TrackName:  track.Name,
 		ArtistName: strings.Join(artists, " & "),
 		AlbumName:  track.Album.Name,
+		ImageURL:   track.Album.Images[0].URL,
 		PreviewURL: track.PreviewURL,
 	}
 }

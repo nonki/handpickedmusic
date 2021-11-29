@@ -39,13 +39,14 @@ export const onCreateMusic = /* GraphQL */ `
     onCreateMusic {
       id
       colorHex
+      createdAt
+      updatedAt
       spotifyId
       trackName
       artistName
       albumName
+      imageUrl
       previewUrl
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -54,13 +55,14 @@ export const onUpdateMusic = /* GraphQL */ `
     onUpdateMusic {
       id
       colorHex
+      createdAt
+      updatedAt
       spotifyId
       trackName
       artistName
       albumName
+      imageUrl
       previewUrl
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -69,13 +71,14 @@ export const onDeleteMusic = /* GraphQL */ `
     onDeleteMusic {
       id
       colorHex
+      createdAt
+      updatedAt
       spotifyId
       trackName
       artistName
       albumName
+      imageUrl
       previewUrl
-      createdAt
-      updatedAt
     }
   }
 `;

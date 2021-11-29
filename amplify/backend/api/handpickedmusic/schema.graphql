@@ -10,10 +10,14 @@ type Track @model {
 }
 
 type Music @model {
+  id: ID
   colorHex: String!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   spotifyId: String!
   trackName: String!
   artistName: String!
   albumName: String!
+  imageUrl: String!
   previewUrl: String!
 }

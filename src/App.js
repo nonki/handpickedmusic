@@ -2,70 +2,68 @@ import './App.css';
 
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
 import Color from 'color';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Input from '@mui/material/Input';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import { createContext, useContext, useState, useMemo } from 'react';
 
 import Music from './Music.js';
+import Upload from './Upload.js';
 
-export const ColorModeContext = createContext({ setPrimaryColor: () => {}, setSecondaryColor: () => {} });
-
-const isValidColor = (color) => {
-  if (color.charAt(0) !== '#')
-    return false;
-
-  let colorCode = color.substring(1);
-  if (colorCode.length > 6)
-    return false;
-
-  let re = /^[a-fA-F0-9]+$/
-  return re.test(colorCode)
-}
+export const TrackContext = createContext({ track: {}, trackId: '', setTrackId: () => {}, setTrack: () => {} });
 
 function App() {
-  const [color, setColor] = useState('#');
-  const context = useContext(ColorModeContext);
+  const context = useContext(TrackContext);
 
   return (
     <Box
       sx={{
         bgcolor: 'primary.main',
-        color: 'secondary.main',
         height: '100%',
         width: '100%',
       }}>
+    <Container
+      sx={{
+        textAlign: 'center',
+        bgcolor: 'primary.main',
+        height: '100%',
+        width: '100%',
+      }}>
+      <Upload />
       <Container
         sx={{
-          textAlign: 'center',
-        }}>
-        <Typography variant='h2'>
-          Welcome!
-        </Typography>
-        <Input value={color} onChange={(e) => isValidColor(e.target.value) && setColor(e.target.value)} />
-        <Button variant='contained' color='secondary' onClick={() => context.setPrimaryColor(color)}>
-          Submit
-        </Button>
+          position: 'absolute',
+          justifyContent: 'center',
+          alignItems: 'center',
+          top: '30%',
+        }}
+      >
+        <Music />
       </Container>
-      <Music />
+    </Container>
     </Box>
   );
 }
 
-const ToggleColorMode = () => {
+const TrackThemedApp = () => {
+  const [trackId, setTrackId] = useState('')
+  const [track, setTrack] = useState({})
   const [primaryColor, setPrimaryColor] = useState('#4abadf');
   const [secondaryColor, setSecondaryColor] = useState('#df704a');
-  const colorMode = useMemo(
+  const trackFn = useMemo(
     () => ({
-      setPrimaryColor: (primaryColor) => {
-        setPrimaryColor(primaryColor);
+      track: track,
+      trackId: trackId,
+      setTrack: (track) => {
+        setTrack(track)
+      },
+      setTrackId: (trackId) => {
+        setTrackId(trackId)
       }
     }),
-    []
+    [track, trackId]
   );
 
+  useMemo(() => setPrimaryColor(`#${track.colorHex || "4abadf"}`), [track])
   useMemo(() => setSecondaryColor(Color(primaryColor).rotate(180).hex()), [primaryColor]);
 
   const [textColor, setTextColor] = useState('light');
@@ -96,12 +94,12 @@ const ToggleColorMode = () => {
   );
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
+    <TrackContext.Provider value={trackFn}>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
-    </ColorModeContext.Provider>
+    </TrackContext.Provider>
   );
 }
 
-export default ToggleColorMode;
+export default TrackThemedApp;

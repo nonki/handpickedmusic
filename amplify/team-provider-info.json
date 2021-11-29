@@ -21,12 +21,12 @@
       "function": {
         "GetDailyMusic": {
           "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
-          "s3Key": "amplify-builds/GetDailyMusic-6e57525155596c516451-build.zip"
+          "s3Key": "amplify-builds/GetDailyMusic-624e6663597179346951-build.zip"
         },
         "EnrichTrack": {
           "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
           "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
-          "s3Key": "amplify-builds/EnrichTrack-784a6b393867436d5239-build.zip"
+          "s3Key": "amplify-builds/EnrichTrack-79313770774e73385334-build.zip"
         }
       }
     }
