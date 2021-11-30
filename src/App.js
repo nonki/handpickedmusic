@@ -8,6 +8,7 @@ import { createContext, useState, useMemo } from 'react';
 
 import Music from './Music.js';
 import Upload from './Upload.js';
+import Future from './Future.js';
 
 export const TrackContext = createContext({ track: {}, trackId: '', preview: false, setTrackId: () => {}, setTrack: () => {}, setPreview: () => {} });
 
@@ -29,6 +30,7 @@ function App() {
         width: '100%',
       }}>
       {cookieValue && <Upload />}
+      {cookieValue && <Future />}
       <Container
         sx={{
           position: 'absolute',
