@@ -3,6 +3,7 @@ import './App.css';
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
 import Color from 'color';
 import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { createContext, useState, useMemo } from 'react';
 
@@ -21,28 +22,22 @@ function App() {
         bgcolor: 'primary.main',
         height: '100%',
         width: '100%',
-      }}>
-    <Container
-      sx={{
         textAlign: 'center',
-        bgcolor: 'primary.main',
-        height: '100%',
-        width: '100%',
-      }}>
+        alignItems: 'center',
+      }}
+    justifyContent="center">
       {cookieValue && <Upload />}
       {cookieValue && <Future />}
       <Container
         sx={{
           position: 'absolute',
-          justifyContent: 'center',
-          alignItems: 'center',
-          transform: 'translate(0%, -50%)',
+          transform: 'translate(-50%, -50%)',
           top: '50%',
+          left: '50%',
         }}
       >
         <Music />
       </Container>
-    </Container>
     </Box>
   );
 }
@@ -50,8 +45,8 @@ function App() {
 const TrackThemedApp = () => {
   const [trackId, setTrackId] = useState('')
   const [track, setTrack] = useState({})
-  const [primaryColor, setPrimaryColor] = useState('#4abadf');
-  const [secondaryColor, setSecondaryColor] = useState('#df704a');
+  const [primaryColor, setPrimaryColor] = useState('#ffffff');
+  const [secondaryColor, setSecondaryColor] = useState('#000000');
   const [preview, setPreview] = useState(false);
 
   const trackFn = useMemo(
@@ -72,7 +67,7 @@ const TrackThemedApp = () => {
     [track, trackId, preview]
   );
 
-  useMemo(() => setPrimaryColor(`#${track.colorHex || "4abadf"}`), [track])
+  useMemo(() => setPrimaryColor(`#${track.colorHex || "ffffff"}`), [track])
   useMemo(() => setSecondaryColor(Color(primaryColor).rotate(180).hex()), [primaryColor]);
 
   const [textColor, setTextColor] = useState('light');

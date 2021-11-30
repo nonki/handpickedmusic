@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react'
 import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Fade from '@mui/material/Fade';
@@ -36,30 +37,25 @@ const Music = () => {
     fetchEnrichedTrack(context.trackId)
   }, [context.trackId])
 
-  if (!track.trackName) {
-    return (
-      <div>
-      </div>
-    )
-  }
+  if (!track.trackName)
+    return <Fade
+      in={true}
+      timeout={2000}
+    >
+      <CircularProgress color="inherit" />
+    </Fade>
 
   return (
-    <Container
-      sx={{
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
-      }}>
+    <Container>
       <Fade
         in={true}
-        timeout={1000} >
+        timeout={3000} >
         <Stack
-        sx={{
-          justifyContent: 'center',
-          alignContent: 'center',
-          alignItems: 'center',
-        }}>
-          <Typography sx={{p: 4}} variant='h2' color="textPrimary">
+          sx={{
+            alignItems: 'center',
+          }}
+        >
+          <Typography sx={{pb: 4, pt: 4}} variant='h2' color="textPrimary">
             DAILY TRACK
           </Typography>
 
@@ -68,7 +64,7 @@ const Music = () => {
           <Player url={track.previewUrl} />
 
 
-          <Typography variant='p' color="textPrimary" sx={{ p: 4 }}>
+          <Typography variant='p' color="textPrimary" sx={{ pb: 4, pt: 4 }}>
             <b>{track.trackName.toUpperCase()}</b>
             <br />
             {track.artistName.toLowerCase()}
