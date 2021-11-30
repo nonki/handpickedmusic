@@ -30,5 +30,69 @@
         }
       }
     }
+  },
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-handpickedmusic-staging-210725-authRole",
+      "UnauthRoleArn": "arn:aws:iam::234566038455:role/amplify-handpickedmusic-staging-210725-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::234566038455:role/amplify-handpickedmusic-staging-210725-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-handpickedmusic-staging-210725-deployment",
+      "UnauthRoleName": "amplify-handpickedmusic-staging-210725-unauthRole",
+      "StackName": "amplify-handpickedmusic-staging-210725",
+      "StackId": "arn:aws:cloudformation:eu-central-1:234566038455:stack/amplify-handpickedmusic-staging-210725/5aceb1b0-5158-11ec-b5d3-02cc4c27e91e",
+      "AmplifyAppId": "d2ik45pjro9i5h"
+    },
+    "categories": {
+      "function": {
+        "GetDailyMusic": {
+          "deploymentBucketName": "amplify-handpickedmusic-staging-210725-deployment",
+          "s3Key": "amplify-builds/GetDailyMusic-624e6663597179346951-build.zip"
+        },
+        "EnrichTrack": {
+          "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
+          "deploymentBucketName": "amplify-handpickedmusic-staging-210725-deployment",
+          "s3Key": "amplify-builds/EnrichTrack-44655937457165427966-build.zip"
+        }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2ik45pjro9i5h",
+          "type": "manual"
+        }
+      }
+    }
+  },
+  "production": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-handpickedmusic-production-211457-authRole",
+      "UnauthRoleArn": "arn:aws:iam::234566038455:role/amplify-handpickedmusic-production-211457-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::234566038455:role/amplify-handpickedmusic-production-211457-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
+      "UnauthRoleName": "amplify-handpickedmusic-production-211457-unauthRole",
+      "StackName": "amplify-handpickedmusic-production-211457",
+      "StackId": "arn:aws:cloudformation:eu-central-1:234566038455:stack/amplify-handpickedmusic-production-211457/68815b90-5159-11ec-b1c8-06d8303e6816",
+      "AmplifyAppId": "d2ik45pjro9i5h"
+    },
+    "categories": {
+      "function": {
+        "GetDailyMusic": {
+          "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
+          "s3Key": "amplify-builds/GetDailyMusic-624e6663597179346951-build.zip"
+        },
+        "EnrichTrack": {
+          "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
+          "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
+          "s3Key": "amplify-builds/EnrichTrack-44655937457165427966-build.zip"
+        }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2ik45pjro9i5h",
+          "type": "manual"
+        }
+      }
+    }
   }
 }
