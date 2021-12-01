@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react'
+import { format } from 'date-fns';
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
 import Link from '@mui/material/Link';
@@ -45,6 +46,9 @@ const Music = () => {
       <CircularProgress color="inherit" />
     </Fade>
 
+  const period = format(new Date(), "B").split(' ').pop().toLowerCase()
+  const day = format(new Date(), "eeee").toLowerCase()
+
   return (
     <Container>
       <Fade
@@ -55,8 +59,11 @@ const Music = () => {
             alignItems: 'center',
           }}
         >
-          <Typography sx={{pb: 4, pt: 4}} variant='h2' color="textPrimary">
-            DAILY TRACK
+          <Typography variant='h2' color="textPrimary">
+            {`милицина пјесма`.toLowerCase()}
+          </Typography>
+          <Typography sx={{pb: 4}} variant='p' color="textPrimary">
+            {`a song handpicked for you to enjoy on this cosy ${day} ${period}`.toLowerCase()}
           </Typography>
 
           <img src={track.imageUrl} alt="album art" height="300" width="300" />
