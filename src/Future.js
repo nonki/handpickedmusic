@@ -1,9 +1,11 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Stack from '@mui/material/Stack';
+import PickersDay from '@mui/lab/PickersDay';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { isSameDay } from 'date-fns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
@@ -16,6 +18,7 @@ const Future = () => {
   const context = useContext(TrackContext)
   const [date, setDate] = useState(new Date())
   const [error, setError] = useState("")
+  const [scheduledDates, setScheduledDates] = useState([])
 
   async function preview() {
     const shortDate = date.toISOString().split('T')[0]
@@ -30,7 +33,34 @@ const Future = () => {
     context.setTrackId(items[0].spotifyId)
   }
 
-  const errorEl = <Typography variant='error'>{error}</Typography>
+  async function loadAllSetDates() {
+    const scheduledList = await API.graphql(graphqlOperation(listTracks, { filter: {date: {gt: ""}} }))
+    const items = scheduledList.data.listTracks.items
+    if (items.length < 1)
+      return
+
+    const dates = items.map((e) => new Date(e.date))
+    setScheduledDates(dates)
+    console.log(dates)
+  }
+
+  useEffect(() => {
+    loadAllSetDates()
+  }, [date])
+
+  const errorEl = <Typography variant='error'>
+    {error}
+    </Typography>
+
+  const renderDay = (date, selectedDates, pickersDayProps) => {
+    let disabled = true
+    scheduledDates.forEach((e) => {
+      if (isSameDay(date, e))
+        disabled = false
+    })
+
+    return <PickersDay {...pickersDayProps} disabled={disabled} />
+  }
 
   return (
     <Stack
@@ -45,6 +75,7 @@ const Future = () => {
           <DesktopDatePicker
             label="Future Viewer"
             inputFormat="MM/dd/yyyy"
+            renderDay={renderDay}
             value={date}
             onChange={(d) => setDate(d)}
           renderInput={(params) => <TextField {...params} />}
