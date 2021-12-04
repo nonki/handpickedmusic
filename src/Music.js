@@ -60,7 +60,7 @@ const Music = () => {
           }}
         >
           <Typography variant='h2' color="textPrimary">
-            {`милицина пјесма`.toLowerCase()}
+            {`радио милица`.toLowerCase()}
           </Typography>
           <Typography sx={{pb: 4}} variant='p' color="textPrimary">
             {`a song handpicked for you to enjoy on this cosy ${day} ${period}`.toLowerCase()}
