@@ -19,6 +19,7 @@ const Future = () => {
   const [date, setDate] = useState(new Date())
   const [error, setError] = useState("")
   const [scheduledDates, setScheduledDates] = useState([])
+  const [unscheduledTracks, setUnscheduledTracks] = useState([])
 
   async function preview() {
     const shortDate = date.toISOString().split('T')[0]
@@ -44,8 +45,15 @@ const Future = () => {
     console.log(dates)
   }
 
+  async function loadAllUnsetMusic() {
+    const unscheduledList = await API.graphql(graphqlOperation(listTracks, { filter: { not: {date: {gt: ""}} }}))
+    const items = unscheduledList.data.listTracks.items
+    setUnscheduledTracks(items)
+  }
+
   useEffect(() => {
     loadAllSetDates()
+    loadAllUnsetMusic()
   }, [date])
 
   const errorEl = <Typography variant='error'>
@@ -84,6 +92,9 @@ const Future = () => {
       <Button variant='contained' color='secondary' onClick={() => preview()}>
         Preview
       </Button>
+      <Typography variant="p">
+        {unscheduledTracks.length} tracks pending
+      </Typography>
       { error !== "" && errorEl }
     </Stack>
   )
