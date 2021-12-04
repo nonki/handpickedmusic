@@ -16,9 +16,6 @@
     "s3Key": {
       "Type": "String"
     },
-    "sendEmail": {
-      "Type": "String"
-    },
     "apihandpickedmusicGraphQLAPIIdOutput": {
       "Type": "String",
       "Default": "apihandpickedmusicGraphQLAPIIdOutput"
@@ -30,6 +27,9 @@
     "apihandpickedmusicGraphQLAPIKeyOutput": {
       "Type": "String",
       "Default": "apihandpickedmusicGraphQLAPIKeyOutput"
+    },
+    "sendEmail": {
+      "Type": "String"
     }
   },
   "Conditions": {
