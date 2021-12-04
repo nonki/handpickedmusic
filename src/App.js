@@ -3,8 +3,8 @@ import './App.css';
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
 import Color from 'color';
 import Container from '@mui/material/Container';
-import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+
 import { createContext, useState, useMemo } from 'react';
 
 import Music from './Music.js';
@@ -68,18 +68,28 @@ const TrackThemedApp = () => {
   );
 
   useMemo(() => setPrimaryColor(`#${track.colorHex || "ffffff"}`), [track])
-  useMemo(() => setSecondaryColor(Color(primaryColor).rotate(180).hex()), [primaryColor]);
+  useMemo(() => {
+    const primaryColorObj = Color(primaryColor)
+    let secondaryColorObj = primaryColorObj.rotate(180)
+    if (primaryColorObj.contrast(secondaryColorObj) > 1.1) {
+      setSecondaryColor(secondaryColorObj.hex())
+      return
+    }
+
+    if (primaryColorObj.isDark()) {
+      secondaryColorObj = Color.rgb(255, 255, 255)
+    } else {
+      secondaryColorObj = Color.rgb(0, 0, 0)
+    }
+
+    setSecondaryColor(secondaryColorObj.hex())
+  }, [primaryColor]);
 
   const [textColor, setTextColor] = useState('light');
   useMemo(() => {
-      const color = (primaryColor.charAt(0) === '#') ? primaryColor.substring(1, 7) : primaryColor;
-      const r = parseInt(color.substring(0, 2), 16); // hexToR
-      const g = parseInt(color.substring(2, 4), 16); // hexToG
-      const b = parseInt(color.substring(4, 6), 16); // hexToB
-      setTextColor((((r * 0.299) + (g * 0.587) + (b * 0.114)) > 140) ? 'light' : 'dark');
-    },
-    [primaryColor]
-  );
+    const color = Color(primaryColor)
+    setTextColor(color.isDark() ? 'dark' : 'light');
+  }, [primaryColor]);
 
   const theme = useMemo(
     () =>
