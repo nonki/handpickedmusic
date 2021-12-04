@@ -95,6 +95,11 @@
           "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
           "s3Key": "amplify-builds/EnrichTrack-44655937457165427966-build.zip"
+        },
+        "AlertLowRemainingTrackCount": {
+          "sendEmail": "yes",
+          "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
+          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-725268674b6c6d4d534d-build.zip"
         }
       },
       "hosting": {
