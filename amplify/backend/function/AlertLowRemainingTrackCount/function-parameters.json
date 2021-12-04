@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "api": {
+      "handpickedmusic": [
+        "Query"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "sendEmail",
+      "environmentVariableName": "SEND_EMAIL"
+    }
+  ]
+}
