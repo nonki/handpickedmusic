@@ -97,9 +97,9 @@
           "s3Key": "amplify-builds/EnrichTrack-44655937457165427966-build.zip"
         },
         "AlertLowRemainingTrackCount": {
-          "sendEmail": "yes",
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
-          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-725268674b6c6d4d534d-build.zip"
+          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-544571617a51456a3849-build.zip",
+          "sendEmail": "yes"
         }
       },
       "hosting": {
