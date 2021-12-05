@@ -11,6 +11,10 @@
     {
       "cloudFormationParameterName": "sendEmail",
       "environmentVariableName": "SEND_EMAIL"
+    },
+    {
+      "cloudFormationParameterName": "topicArn",
+      "environmentVariableName": "TOPIC_ARN"
     }
   ]
 }

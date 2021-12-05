@@ -98,8 +98,9 @@
         },
         "AlertLowRemainingTrackCount": {
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
-          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-537071476b6a53474977-build.zip",
-          "sendEmail": "yes"
+          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-2b6962592f2b76463377-build.zip",
+          "sendEmail": "yes",
+          "topicArn": "arn:aws:sns:eu-central-1:234566038455:sns-topic-handpickedmusic-production"
         }
       },
       "hosting": {

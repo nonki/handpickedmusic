@@ -95,8 +95,8 @@ func newSNSClient() *sns.SNS {
 func sendMessage(message string) error {
 	client := newSNSClient()
 
-	subject := "ALERT: handpickedmusi.cc alert (LOW REMAINING TRACK COUNT)"
-	topicArn := "arn:aws:sns:eu-central-1:234566038455:handpickedmusic-alerts"
+	subject := fmt.Sprintf("%s ALERT: handpickedmusi.cc alert (LOW REMAINING TRACK COUNT)", os.Getenv("ENV"))
+	topicArn := os.Getenv("TOPIC_ARN")
 	input := &sns.PublishInput{
 		Message:  &message,
 		Subject:  &subject,

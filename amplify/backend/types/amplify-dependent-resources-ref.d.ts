@@ -25,5 +25,10 @@ export type AmplifyDependentResourcesAttributes = {
             "LambdaExecutionRole": "string",
             "CloudWatchEventRule": "string"
         }
+    },
+    "custom": {
+        "handpickedmusicalerts": {
+            "snsTopicArn": "string"
+        }
     }
 }

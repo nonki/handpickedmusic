@@ -63,5 +63,24 @@
         }
       ]
     }
+  },
+  "custom": {
+    "handpickedmusicalerts": {
+      "service": "customCDK",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "AlertLowRemainingTrackCount",
+          "attributes": [
+            "Name",
+            "Arn",
+            "Region",
+            "LambdaExecutionRole",
+            "CloudWatchEventRule"
+          ]
+        }
+      ]
+    }
   }
 }
