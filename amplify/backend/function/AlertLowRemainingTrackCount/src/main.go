@@ -33,7 +33,8 @@ func HandleRequest(ctx context.Context) (string, error) {
 
 	message := fmt.Sprintf("Unscheduled tracks remaining: %d", len(remainingTracks))
 	if len(remainingTracks) < 20 && os.Getenv("SEND_EMAIL") == "yes" {
-		sendMessage(message)
+		err := sendMessage(message)
+		return message, err
 	}
 
 	return message, nil

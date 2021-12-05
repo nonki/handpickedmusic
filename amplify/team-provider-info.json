@@ -98,7 +98,7 @@
         },
         "AlertLowRemainingTrackCount": {
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
-          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-544571617a51456a3849-build.zip",
+          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-537071476b6a53474977-build.zip",
           "sendEmail": "yes"
         }
       },
