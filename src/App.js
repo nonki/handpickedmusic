@@ -11,6 +11,8 @@ import {
 } from "react-router-dom";
 
 import Home from './Home'
+import Auth from './Auth'
+import AuthFrom from './AuthFrom'
 
 export const TrackContext = createContext({ track: {}, trackId: '', preview: false, setTrackId: () => {}, setTrack: () => {}, setPreview: () => {} });
 
@@ -19,6 +21,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Auth />} />
+        <Route path="/loginFrom" element={<AuthFrom />} />
       </Routes>
     </Router>
   );

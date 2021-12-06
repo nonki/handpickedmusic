@@ -1,6 +1,7 @@
 import Music from './Music.js';
 import Upload from './Upload.js';
 import Future from './Future.js';
+import RequireAuth from './RequireAuth';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -31,7 +32,9 @@ const Home = () => {
           left: '50%',
         }}
       >
-        <Music />
+        <RequireAuth>
+          <Music />
+        </RequireAuth>
       </Container>
     </Box>
   )
