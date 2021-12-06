@@ -2,44 +2,25 @@ import './App.css';
 
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
 import Color from 'color';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-
+import { CookiesProvider } from 'react-cookie';
 import { createContext, useState, useMemo } from 'react';
-import { CookiesProvider, useCookies } from 'react-cookie';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+} from "react-router-dom";
 
-import Music from './Music.js';
-import Upload from './Upload.js';
-import Future from './Future.js';
+import Home from './Home'
 
 export const TrackContext = createContext({ track: {}, trackId: '', preview: false, setTrackId: () => {}, setTrack: () => {}, setPreview: () => {} });
 
 function App() {
-  const [cookies] = useCookies(['admin'])
-
   return (
-    <Box
-      sx={{
-        bgcolor: 'primary.main',
-        height: '100%',
-        width: '100%',
-        textAlign: 'center',
-        alignItems: 'center',
-      }}
-    justifyContent="center">
-      {cookies.admin && <Upload />}
-      {cookies.admin && <Future />}
-      <Container
-        sx={{
-          position: 'absolute',
-          transform: 'translate(-50%, -50%)',
-          top: '50%',
-          left: '50%',
-        }}
-      >
-        <Music />
-      </Container>
-    </Box>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
   );
 }
 
