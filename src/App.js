@@ -6,6 +6,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
 import { createContext, useState, useMemo } from 'react';
+import { CookiesProvider, useCookies } from 'react-cookie';
 
 import Music from './Music.js';
 import Upload from './Upload.js';
@@ -14,7 +15,7 @@ import Future from './Future.js';
 export const TrackContext = createContext({ track: {}, trackId: '', preview: false, setTrackId: () => {}, setTrack: () => {}, setPreview: () => {} });
 
 function App() {
-  let cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)admin\s*=\s*([^;]*).*$)|^.*$/, "$1");
+  const [cookies] = useCookies(['admin'])
 
   return (
     <Box
@@ -26,8 +27,8 @@ function App() {
         alignItems: 'center',
       }}
     justifyContent="center">
-      {cookieValue && <Upload />}
-      {cookieValue && <Future />}
+      {cookies.admin && <Upload />}
+      {cookies.admin && <Future />}
       <Container
         sx={{
           position: 'absolute',
@@ -110,7 +111,9 @@ const TrackThemedApp = () => {
   return (
     <TrackContext.Provider value={trackFn}>
       <ThemeProvider theme={theme}>
-        <App />
+        <CookiesProvider>
+          <App />
+        </CookiesProvider>
       </ThemeProvider>
     </TrackContext.Provider>
   );
