@@ -15,7 +15,7 @@ const AuthFrom = () => {
       return
 
     async function auth() {
-      const authUserData = await API.graphql(graphqlOperation(authUser, { code: code, redirectUri: "http://localhost:3000/loginFrom" }))
+      const authUserData = await API.graphql(graphqlOperation(authUser, { code: code, redirectUri: `${window.location.origin}/loginFrom` }))
       const authData = authUserData.data.authUser
 
       setCookie('SPOTIFY_AUTH', Buffer.from(JSON.stringify(authData)).toString("base64"), { path: '/', expires: new Date('2099') })
