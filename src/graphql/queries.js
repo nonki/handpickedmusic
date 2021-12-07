@@ -7,8 +7,8 @@ export const getDailyTrack = /* GraphQL */ `
   }
 `;
 export const enrichTrack = /* GraphQL */ `
-  query EnrichTrack($spotifyId: String, $accessToken: String) {
-    enrichTrack(spotifyId: $spotifyId, accessToken: $accessToken) {
+  query EnrichTrack($spotifyId: String, $token: String) {
+    enrichTrack(spotifyId: $spotifyId, token: $token) {
       id
       colorHex
       createdAt
