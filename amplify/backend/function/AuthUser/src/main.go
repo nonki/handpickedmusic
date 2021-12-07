@@ -19,9 +19,8 @@ type Event struct {
 }
 
 type argumentsObj struct {
-	Code         string `json:"code"`
-	RefreshToken string `json:"refreshToken"`
-	RedirectURI  string `json:"redirectUri"`
+	Code        string `json:"code"`
+	RedirectURI string `json:"redirectUri"`
 }
 
 type Auth struct {

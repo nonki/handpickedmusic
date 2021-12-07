@@ -15,7 +15,7 @@ import Player from './Player';
 import { useCookies } from 'react-cookie'
 
 const Music = () => {
-  const [cookies] = useCookies(['access_token'])
+  const [cookies] = useCookies(['SPOTIFY_AUTH'])
   const context = useContext(TrackContext);
   const [track, setTrack] = useState({})
 
@@ -28,7 +28,8 @@ const Music = () => {
         }
 
         console.log(trackId)
-        const enrichedTrack = await API.graphql(graphqlOperation(enrichTrack, {spotifyId: trackId, token: cookies.access_token}))
+        console.log(cookies.SPOTIFY_AUTH)
+        const enrichedTrack = await API.graphql(graphqlOperation(enrichTrack, {spotifyId: trackId, tokenData: cookies.SPOTIFY_AUTH}))
         console.log(enrichedTrack)
 
         setTrack(enrichedTrack.data.enrichTrack)

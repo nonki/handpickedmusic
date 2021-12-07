@@ -1,7 +1,7 @@
 type Query {
   getDailyTrack: String @function(name: "GetDailyMusic-${env}")
-  enrichTrack(spotifyId: String, token: String): Music @function(name: "EnrichTrack-${env}")
-  authUser(code: String, refreshToken: String, redirectUri: String): Auth @function(name: "AuthUser-${env}")
+  enrichTrack(spotifyId: String, tokenData: String): Music @function(name: "EnrichTrack-${env}")
+  authUser(code: String, redirectUri: String): Auth @function(name: "AuthUser-${env}")
 }
 
 type Track @model {

@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/EdlinOrg/prominentcolor"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -28,7 +29,7 @@ type Event struct {
 
 type argumentsObj struct {
 	SpotifyID spotify.ID `json:"spotifyId"`
-	Token     *string    `json:"token"`
+	TokenData *string    `json:"tokenData"`
 }
 
 type EnrichedTrack struct {
@@ -44,17 +45,35 @@ type EnrichedTrack struct {
 }
 
 func HandleRequest(ctx context.Context, req Event) (*EnrichedTrack, error) {
-	accessToken := req.Arguments.Token
+	tokenData := req.Arguments.TokenData
 	var spotifyToken *oauth2.Token
 	var err error
-	if accessToken == nil {
+	if tokenData == nil {
 		spotifyToken, err = generateSpotifyToken()
 		if err != nil {
 			return nil, err
 		}
 	} else {
+		decodeStr, _ := base64.StdEncoding.DecodeString(*tokenData)
+
+		var t struct {
+			AccessToken  string `json:"accessToken"`
+			RefreshToken string `json:"refreshToken"`
+			Expiry       string `json:"expiry"`
+		}
+		if err = json.Unmarshal(decodeStr, &t); err != nil {
+			return nil, err
+		}
+
+		expiry, err := time.Parse(time.RFC3339, t.Expiry)
+		if err != nil {
+			return nil, err
+		}
+
 		spotifyToken = &oauth2.Token{
-			AccessToken: *req.Arguments.Token,
+			AccessToken:  t.AccessToken,
+			RefreshToken: t.RefreshToken,
+			Expiry:       expiry,
 		}
 	}
 
