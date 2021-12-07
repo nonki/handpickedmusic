@@ -30,11 +30,14 @@
         },
         "AlertLowRemainingTrackCount": {
           "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
-          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-34374d4f7674446f3749-build.zip",
-          "sendEmail": "no"
+          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-4645426f79574a376a31-build.zip",
+          "sendEmail": "no",
+          "topicArn": "temp"
         },
         "AuthUser": {
-          "secretsPathAmplifyAppId": "d2ik45pjro9i5h"
+          "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
+          "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
+          "s3Key": "amplify-builds/AuthUser-6d4d5973576362446678-build.zip"
         }
       }
     }

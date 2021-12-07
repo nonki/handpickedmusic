@@ -2,14 +2,8 @@ package main
 
 import (
 	"context"
-	"encoding/base64"
-	"encoding/json"
-	"fmt"
-	"io"
-	"net/http"
-	"net/url"
 	"os"
-	"strings"
+	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -25,68 +19,38 @@ type Event struct {
 }
 
 type argumentsObj struct {
-	Token       string `json:"token"`
+	Code        string `json:"code"`
 	RedirectURI string `json:"redirectUri"`
 }
 
 type Auth struct {
 	AccessToken  string `json:"accessToken"`
 	RefreshToken string `json:"refreshToken"`
-	ExpiresIn    int    `json:"expiresIn"`
+	Expiry       string `json:"expiry"`
 }
 
-func HandleRequest(ctx context.Context, req Event) (string, error) {
-	token, err := GetToken(req.Arguments.Token, req.Arguments.RedirectURI)
+func HandleRequest(ctx context.Context, req Event) (*Auth, error) {
+	token, err := GetToken(req.Arguments.Code, req.Arguments.RedirectURI)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	return &Auth{
 		AccessToken:  token.AccessToken,
 		RefreshToken: token.RefreshToken,
-		ExpiresIn:    token.Expiry.format("2006-01-02"),
+		Expiry:       token.Expiry.Format(time.RFC3339),
 	}, nil
 }
 
-func GetToken(token, redirectURI string) (*oauth2.Token, error) {
+func GetToken(code, redirectURI string) (*oauth2.Token, error) {
 	clientID, clientSecret, err := getSpotifySecrets()
 	if err != nil {
 		return nil, errors.Wrap(err, "error getting spotify secrets")
 	}
 
-	client := &http.Client{}
-
-	data := url.Values{}
-	data.Set("grant_type", "authorization_code")
-	data.Set("code", token)
-	data.Set("redirect_uri", redirectURI)
-
-	req, _ := http.NewRequest(http.MethodPost, spotify.TokenURL, strings.NewReader(data.Encode()))
-
-	authString := fmt.Sprintf("%s:%s", clientID, clientSecret)
-	authHeader := fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(authString)))
-	req.Header.Set("Authorization", authHeader)
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, errors.Wrap(err, "error making post request for access token")
-	}
-
-	if resp.StatusCode != 200 {
-		body, _ := io.ReadAll(resp.Body)
-		return nil, errors.New(fmt.Sprintf("Got error code %d - %s", resp.StatusCode, body))
-	}
-
-	defer resp.Body.Close()
-
-	var tokenData oauth2.Token
-	if err = json.NewDecoder(resp.Body).Decode(&tokenData); err != nil {
-		body, _ := io.ReadAll(resp.Body)
-		return nil, errors.Wrap(err, fmt.Sprintf("error unmarsheling json data: %s", body))
-	}
-
-	return &tokenData, nil
+	auth := spotify.NewAuthenticator(redirectURI, "")
+	auth.SetAuthInfo(clientID, clientSecret)
+	return auth.Exchange(code)
 }
 
 func getSpotifySecrets() (clientID, clientSecret string, err error) {

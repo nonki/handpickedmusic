@@ -1,3 +1,6 @@
 {
-  "name": "Amplify"
+    "arguments": {
+        "code": "AQDA4QQyN3hXV-8xNYqzqCbhrLTYJNcLgeP6GZf3l9qg3j0PA06F9sFr1OsCXtUbT8TWFfyvr0dz7_p70uTZ2-Hd7xa888Xo1NKqKsL1kY5mtkyFm5FZp_5u158ZNCtLo3M",
+        "redirectUri": "http://localhost:3000/loginFrom"
+    }
 }

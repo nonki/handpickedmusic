@@ -23,6 +23,18 @@ export const enrichTrack = /* GraphQL */ `
     }
   }
 `;
+export const authUser = /* GraphQL */ `
+  query AuthUser($code: String, $redirectUri: String) {
+    authUser(code: $code, redirectUri: $redirectUri) {
+      id
+      createdAt
+      updatedAt
+      accessToken
+      refreshToken
+      expiry
+    }
+  }
+`;
 export const getTrack = /* GraphQL */ `
   query GetTrack($id: ID!) {
     getTrack(id: $id) {
@@ -88,6 +100,37 @@ export const listMusics = /* GraphQL */ `
         imageUrl
         previewUrl
         externalUrl
+      }
+      nextToken
+    }
+  }
+`;
+export const getAuth = /* GraphQL */ `
+  query GetAuth($id: ID!) {
+    getAuth(id: $id) {
+      id
+      createdAt
+      updatedAt
+      accessToken
+      refreshToken
+      expiry
+    }
+  }
+`;
+export const listAuths = /* GraphQL */ `
+  query ListAuths(
+    $filter: ModelAuthFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAuths(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        updatedAt
+        accessToken
+        refreshToken
+        expiry
       }
       nextToken
     }
