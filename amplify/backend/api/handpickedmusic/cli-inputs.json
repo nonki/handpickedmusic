@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "serviceName": "AppSync",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 365,
+      "apiKeyExpirationDate": "2022-12-07T09:58:08.198Z",
+      "keyDescription": "music api"
+    },
+    "conflictResolution": {},
+    "apiName": "handpickedmusic",
+    "gqlSchemaPath": "/Users/Thomas.Flack/code/github.com/nonki/handpickedmusic/amplify/backend/api/handpickedmusic/schema.graphql",
+    "additionalAuthTypes": []
+  }
+}

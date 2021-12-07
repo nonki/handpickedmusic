@@ -1,5 +1,6 @@
 {
   "AppSyncApiName": "handpickedmusic",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2021-12-07T09:58:12.742Z"
 }

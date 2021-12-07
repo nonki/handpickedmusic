@@ -61,8 +61,9 @@
         },
         "AlertLowRemainingTrackCount": {
           "deploymentBucketName": "amplify-handpickedmusic-staging-210725-deployment",
-          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-70304768463475613338-build.zip",
-          "sendEmail": "no"
+          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-4645426f79574a376a31-build.zip",
+          "sendEmail": "no",
+          "topicArn": "temp"
         }
       },
       "hosting": {
