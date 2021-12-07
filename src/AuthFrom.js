@@ -5,6 +5,11 @@ import { useCookies } from 'react-cookie'
 import { API, graphqlOperation  } from 'aws-amplify'
 import { authUser } from './graphql/queries';
 
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+
 const AuthFrom = () => {
   const [searchParams] = useSearchParams()
   const [code, setCode] = useState()
@@ -36,11 +41,21 @@ const AuthFrom = () => {
   }
 
   return (
-    <div>
-      <p>
-        Logging you in
-      </p>
-    </div>
+    <Container
+      sx={{
+        position: 'absolute',
+        transform: 'translate(-50%, -50%)',
+        top: '50%',
+        left: '50%',
+      }}
+    >
+      <Fade
+        in={true}
+        timeout={2000}
+      >
+        <CircularProgress color="inherit" />
+      </Fade>
+    </Container>
   )
 }
 

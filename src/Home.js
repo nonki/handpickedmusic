@@ -7,21 +7,12 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
 import { useCookies } from 'react-cookie';
-import { useLocation, useParams } from "react-router-dom";
 
 const Home = () => {
   const [cookies] = useCookies(['admin'])
 
   return (
-    <Box
-      sx={{
-        bgcolor: 'primary.main',
-        height: '100%',
-        width: '100%',
-        textAlign: 'center',
-        alignItems: 'center',
-      }}
-    justifyContent="center">
+    <Box>
       {cookies.admin && <Upload />}
       {cookies.admin && <Future />}
       <Container

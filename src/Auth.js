@@ -1,3 +1,7 @@
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
+
 const Auth = () => {
   const params = {
     response_type: 'code',
@@ -11,11 +15,21 @@ const Auth = () => {
   window.location = `https://accounts.spotify.com/authorize?${queryParams.toString()}`
 
   return (
-    <div>
-      <p>
-        Not authed
-      </p>
-    </div>
+    <Container
+      sx={{
+        position: 'absolute',
+        transform: 'translate(-50%, -50%)',
+        top: '50%',
+        left: '50%',
+      }}
+    >
+      <Fade
+        in={true}
+        timeout={2000}
+      >
+        <CircularProgress color="inherit" />
+      </Fade>
+    </Container>
   )
 }
 

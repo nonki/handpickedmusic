@@ -2,6 +2,7 @@ import './App.css';
 
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
 import Color from 'color';
+import Box from '@mui/material/Box';
 import { CookiesProvider } from 'react-cookie';
 import { createContext, useState, useMemo } from 'react';
 import {
@@ -18,6 +19,15 @@ export const TrackContext = createContext({ track: {}, trackId: '', preview: fal
 
 function App() {
   return (
+    <Box
+      sx={{
+        bgcolor: 'primary.main',
+        height: '100%',
+        width: '100%',
+        textAlign: 'center',
+        alignItems: 'center',
+      }}
+    justifyContent="center">
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,6 +35,7 @@ function App() {
         <Route path="/loginFrom" element={<AuthFrom />} />
       </Routes>
     </Router>
+    </Box>
   );
 }
 
