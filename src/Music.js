@@ -12,8 +12,10 @@ import { getDailyTrack, enrichTrack } from './graphql/queries';
 import { TrackContext } from './App.js';
 import Player from './Player';
 
+import { useCookies } from 'react-cookie'
 
 const Music = () => {
+  const [cookies] = useCookies(['access_token'])
   const context = useContext(TrackContext);
   const [track, setTrack] = useState({})
 
@@ -26,7 +28,7 @@ const Music = () => {
         }
 
         console.log(trackId)
-        const enrichedTrack = await API.graphql(graphqlOperation(enrichTrack, {spotifyId: trackId}))
+        const enrichedTrack = await API.graphql(graphqlOperation(enrichTrack, {spotifyId: trackId, token: cookies.access_token}))
         console.log(enrichedTrack)
 
         setTrack(enrichedTrack.data.enrichTrack)
