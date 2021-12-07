@@ -73,7 +73,8 @@
         },
         "AuthUser": {
           "deploymentBucketName": "amplify-handpickedmusic-staging-210725-deployment",
-          "s3Key": "amplify-builds/AuthUser-566e7365486f674b4c34-build.zip"
+          "s3Key": "amplify-builds/AuthUser-566e7365486f674b4c34-build.zip",
+          "secretsPathAmplifyAppId": "d2ik45pjro9i5h"
         }
       },
       "hosting": {
