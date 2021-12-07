@@ -1,6 +1,7 @@
 type Query {
   getDailyTrack: String @function(name: "GetDailyMusic-${env}")
   enrichTrack(spotifyId: String): Music @function(name: "EnrichTrack-${env}")
+  authUser(token: String, redirectUri: String): Auth @function(name: "AuthUser-${env}")
 }
 
 type Track @model {
@@ -21,4 +22,13 @@ type Music @model {
   imageUrl: String!
   previewUrl: String!
   externalUrl: String!
+}
+
+type Auth @model {
+  id: ID
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  accessToken: String
+  refreshToken: String
+  expires: AWSDate
 }

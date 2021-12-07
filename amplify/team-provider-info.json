@@ -32,6 +32,9 @@
           "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
           "s3Key": "amplify-builds/AlertLowRemainingTrackCount-34374d4f7674446f3749-build.zip",
           "sendEmail": "no"
+        },
+        "AuthUser": {
+          "secretsPathAmplifyAppId": "d2ik45pjro9i5h"
         }
       }
     }
