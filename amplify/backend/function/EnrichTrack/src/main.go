@@ -28,6 +28,7 @@ type Event struct {
 
 type argumentsObj struct {
 	SpotifyID spotify.ID `json:"spotifyId"`
+	Token     *string    `json:"token"`
 }
 
 type EnrichedTrack struct {
@@ -43,7 +44,21 @@ type EnrichedTrack struct {
 }
 
 func HandleRequest(ctx context.Context, req Event) (*EnrichedTrack, error) {
-	client, err := NewSpotifyClient()
+	accessToken := req.Arguments.Token
+	var spotifyToken *oauth2.Token
+	var err error
+	if accessToken == nil {
+		spotifyToken, err = generateSpotifyToken()
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		spotifyToken = &oauth2.Token{
+			AccessToken: *req.Arguments.Token,
+		}
+	}
+
+	client, err := NewSpotifyClient(spotifyToken)
 	if err != nil {
 		return nil, errors.Wrap(err, "error getting spotfy client")
 	}
@@ -124,7 +139,7 @@ func downloadFile(url string) ([]byte, error) {
 	return body, nil
 }
 
-func NewSpotifyClient() (*spotify.Client, error) {
+func generateSpotifyToken() (*oauth2.Token, error) {
 	clientID, clientSecret, err := getSpotifySecrets()
 	if err != nil {
 		return nil, errors.Wrap(err, "error getting spotify secrets")
@@ -155,14 +170,18 @@ func NewSpotifyClient() (*spotify.Client, error) {
 
 	defer resp.Body.Close()
 
-	var tokenData oauth2.Token
-	if err = json.NewDecoder(resp.Body).Decode(&tokenData); err != nil {
+	tokenData := &oauth2.Token{}
+	if err = json.NewDecoder(resp.Body).Decode(tokenData); err != nil {
 		body, _ := io.ReadAll(resp.Body)
 		return nil, errors.Wrap(err, fmt.Sprintf("error unmarsheling json data: %s", body))
 	}
 
+	return tokenData, nil
+}
+
+func NewSpotifyClient(token *oauth2.Token) (*spotify.Client, error) {
 	auth := spotify.NewAuthenticator("", "")
-	spotifyClient := auth.NewClient(&tokenData)
+	spotifyClient := auth.NewClient(token)
 	return &spotifyClient, nil
 }
 
