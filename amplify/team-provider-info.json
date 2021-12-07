@@ -63,13 +63,17 @@
         "EnrichTrack": {
           "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
           "deploymentBucketName": "amplify-handpickedmusic-staging-210725-deployment",
-          "s3Key": "amplify-builds/EnrichTrack-44655937457165427966-build.zip"
+          "s3Key": "amplify-builds/EnrichTrack-576f61425352722f7857-build.zip"
         },
         "AlertLowRemainingTrackCount": {
           "deploymentBucketName": "amplify-handpickedmusic-staging-210725-deployment",
           "s3Key": "amplify-builds/AlertLowRemainingTrackCount-4645426f79574a376a31-build.zip",
           "sendEmail": "no",
           "topicArn": "temp"
+        },
+        "AuthUser": {
+          "deploymentBucketName": "amplify-handpickedmusic-staging-210725-deployment",
+          "s3Key": "amplify-builds/AuthUser-566e7365486f674b4c34-build.zip"
         }
       },
       "hosting": {
