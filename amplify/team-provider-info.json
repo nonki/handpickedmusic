@@ -106,13 +106,18 @@
         "EnrichTrack": {
           "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
-          "s3Key": "amplify-builds/EnrichTrack-44655937457165427966-build.zip"
+          "s3Key": "amplify-builds/EnrichTrack-576f61425352722f7857-build.zip"
         },
         "AlertLowRemainingTrackCount": {
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
           "s3Key": "amplify-builds/AlertLowRemainingTrackCount-2b6962592f2b76463377-build.zip",
           "sendEmail": "yes",
           "topicArn": "arn:aws:sns:eu-central-1:234566038455:sns-topic-handpickedmusic-production"
+        },
+        "AuthUser": {
+          "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
+          "s3Key": "amplify-builds/AuthUser-566e7365486f674b4c34-build.zip",
+          "secretsPathAmplifyAppId": "d2ik45pjro9i5h"
         }
       },
       "hosting": {
