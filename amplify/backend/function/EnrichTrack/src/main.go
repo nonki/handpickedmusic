@@ -199,7 +199,13 @@ func generateSpotifyToken() (*oauth2.Token, error) {
 }
 
 func NewSpotifyClient(token *oauth2.Token) (*spotify.Client, error) {
+	clientID, clientSecret, err := getSpotifySecrets()
+	if err != nil {
+		return nil, err
+	}
+
 	auth := spotify.NewAuthenticator("", "")
+	auth.SetAuthInfo(clientID, clientSecret)
 	spotifyClient := auth.NewClient(token)
 	return &spotifyClient, nil
 }
