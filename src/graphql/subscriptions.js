@@ -85,3 +85,39 @@ export const onDeleteMusic = /* GraphQL */ `
     }
   }
 `;
+export const onCreateAuth = /* GraphQL */ `
+  subscription OnCreateAuth {
+    onCreateAuth {
+      id
+      createdAt
+      updatedAt
+      accessToken
+      refreshToken
+      expiry
+    }
+  }
+`;
+export const onUpdateAuth = /* GraphQL */ `
+  subscription OnUpdateAuth {
+    onUpdateAuth {
+      id
+      createdAt
+      updatedAt
+      accessToken
+      refreshToken
+      expiry
+    }
+  }
+`;
+export const onDeleteAuth = /* GraphQL */ `
+  subscription OnDeleteAuth {
+    onDeleteAuth {
+      id
+      createdAt
+      updatedAt
+      accessToken
+      refreshToken
+      expiry
+    }
+  }
+`;

@@ -7,8 +7,8 @@ export const getDailyTrack = /* GraphQL */ `
   }
 `;
 export const enrichTrack = /* GraphQL */ `
-  query EnrichTrack($spotifyId: String) {
-    enrichTrack(spotifyId: $spotifyId) {
+  query EnrichTrack($spotifyId: String, $tokenData: String) {
+    enrichTrack(spotifyId: $spotifyId, tokenData: $tokenData) {
       id
       colorHex
       createdAt
@@ -20,6 +20,18 @@ export const enrichTrack = /* GraphQL */ `
       imageUrl
       previewUrl
       externalUrl
+    }
+  }
+`;
+export const authUser = /* GraphQL */ `
+  query AuthUser($code: String, $redirectUri: String) {
+    authUser(code: $code, redirectUri: $redirectUri) {
+      id
+      createdAt
+      updatedAt
+      accessToken
+      refreshToken
+      expiry
     }
   }
 `;
@@ -88,6 +100,37 @@ export const listMusics = /* GraphQL */ `
         imageUrl
         previewUrl
         externalUrl
+      }
+      nextToken
+    }
+  }
+`;
+export const getAuth = /* GraphQL */ `
+  query GetAuth($id: ID!) {
+    getAuth(id: $id) {
+      id
+      createdAt
+      updatedAt
+      accessToken
+      refreshToken
+      expiry
+    }
+  }
+`;
+export const listAuths = /* GraphQL */ `
+  query ListAuths(
+    $filter: ModelAuthFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAuths(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        updatedAt
+        accessToken
+        refreshToken
+        expiry
       }
       nextToken
     }

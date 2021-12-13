@@ -2,20 +2,22 @@ import './App.css';
 
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
 import Color from 'color';
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-
+import { CookiesProvider } from 'react-cookie';
 import { createContext, useState, useMemo } from 'react';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+} from "react-router-dom";
 
-import Music from './Music.js';
-import Upload from './Upload.js';
-import Future from './Future.js';
+import Home from './Home'
+import Auth from './Auth'
+import AuthFrom from './AuthFrom'
 
 export const TrackContext = createContext({ track: {}, trackId: '', preview: false, setTrackId: () => {}, setTrack: () => {}, setPreview: () => {} });
 
 function App() {
-  let cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)admin\s*=\s*([^;]*).*$)|^.*$/, "$1");
-
   return (
     <Box
       sx={{
@@ -26,18 +28,13 @@ function App() {
         alignItems: 'center',
       }}
     justifyContent="center">
-      {cookieValue && <Upload />}
-      {cookieValue && <Future />}
-      <Container
-        sx={{
-          position: 'absolute',
-          transform: 'translate(-50%, -50%)',
-          top: '50%',
-          left: '50%',
-        }}
-      >
-        <Music />
-      </Container>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Auth />} />
+        <Route path="/loginFrom" element={<AuthFrom />} />
+      </Routes>
+    </Router>
     </Box>
   );
 }
@@ -110,7 +107,9 @@ const TrackThemedApp = () => {
   return (
     <TrackContext.Provider value={trackFn}>
       <ThemeProvider theme={theme}>
-        <App />
+        <CookiesProvider>
+          <App />
+        </CookiesProvider>
       </ThemeProvider>
     </TrackContext.Provider>
   );
