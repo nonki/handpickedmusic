@@ -15,14 +15,14 @@ import Player from './Player';
 import { useCookies } from 'react-cookie'
 
 const Music = () => {
-  const [cookies] = useCookies(['SPOTIFY_AUTH'])
+  const [cookies] = useCookies(['SPOTIFY_AUTH', 'NO_GENERATE_DAILY_SONG'])
   const context = useContext(TrackContext);
   const [track, setTrack] = useState({})
 
   useEffect(() => {
     async function fetchEnrichedTrack(trackId) {
       try {
-        if (trackId === "") {
+        if (trackId === "" && !cookies.NO_GENERATE_DAILY_SONG) {
           const dailyTrackData = await API.graphql(graphqlOperation(getDailyTrack))
           trackId = dailyTrackData.data.getDailyTrack
         }
