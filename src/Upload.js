@@ -12,7 +12,7 @@ import { TrackContext } from './App.js';
 
 import { API, graphqlOperation  } from 'aws-amplify'
 import { listTracks } from './graphql/queries';
-import { createTrack } from './graphql/mutations';
+import { createTrack, updateTrack } from './graphql/mutations';
 
 const Upload = () => {
   const context = useContext(TrackContext)
@@ -37,7 +37,10 @@ const Upload = () => {
       const scheduledList = await API.graphql(graphqlOperation(listTracks, { filter: {date: {eq: date}} }))
       const scheduledItems = scheduledList.data.listTracks.items
       if (scheduledItems.length > 0) {
-        setError("Entry already exists for that date " + date)
+        const scheduledItem = scheduledItems.pop()
+        console.log(`Unscheduling item ${scheduledItem.id} - ${scheduledItem.spotifyId}`)
+        await API.graphql(graphqlOperation(updateTrack, { input: { id: scheduledItem.id, date: null } }))
+        setError(`Unscheduled item ${scheduledItem.id} - ${scheduledItem.spotifyId} for ${date}`)
         return
       }
     }
