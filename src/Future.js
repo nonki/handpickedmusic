@@ -1,4 +1,13 @@
 import { useContext, useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PreviewIcon from '@mui/icons-material/Preview';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import PickersDay from '@mui/lab/PickersDay';
 import Typography from '@mui/material/Typography';
@@ -11,6 +20,7 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
 import { API, graphqlOperation  } from 'aws-amplify'
 import { listTracks } from './graphql/queries';
+import { deleteTrack as gqlDeleteTrack } from './graphql/mutations';
 
 import { TrackContext } from './App';
 
@@ -42,7 +52,6 @@ const Future = () => {
 
     const dates = items.map((e) => new Date(e.date))
     setScheduledDates(dates)
-    console.log(dates)
   }
 
   async function loadAllUnsetMusic() {
@@ -95,8 +104,58 @@ const Future = () => {
       <Typography variant="p">
         {unscheduledTracks.length} tracks pending
       </Typography>
+      <TracksList tracks={unscheduledTracks} />
       { error !== "" && errorEl }
     </Stack>
+  )
+}
+
+const TracksList = ( props ) => {
+  const { tracks } = props
+  const context = useContext(TrackContext)
+
+  async function deleteTrack(id) {
+    console.log(`deleting track ${id}`)
+    const deletedTracks = await API.graphql(graphqlOperation(gqlDeleteTrack, { input: {id: id} }))
+    const deletedTrack = deletedTracks.data.deleteTrack
+    if (deleteTrack)
+      console.log(`deleted track ${deletedTrack.id} - ${deletedTrack.spotifyId}`)
+  }
+
+  const renderTrackRow = ( index, track ) => {
+    const isSelected = (context.trackId === track.spotifyId)
+
+    return (
+      <ListItem
+        key={index}
+        secondaryAction={
+          <IconButton edge="end" aria-label="delete" onClick={() => deleteTrack(track.id)}>
+            <DeleteIcon />
+          </IconButton>
+        }
+        component="div"
+        disablePadding
+      >
+        <ListItemButton onClick={() => context.setTrackId(track.spotifyId)}>
+          {isSelected &&
+          <ListItemIcon>
+            <PreviewIcon />
+          </ListItemIcon>
+          }
+          <ListItemText inset={!isSelected} primary={`${track.spotifyId}`} />
+        </ListItemButton>
+      </ListItem>
+    )
+  }
+
+  return (
+    <Box
+      sx={{ width: '100%', height: 50, overflow: 'auto', maxWidth: 360  }}
+    >
+      <List>
+        {tracks.map((track, index) => renderTrackRow(index, track))}
+      </List>
+    </Box>
   )
 }
 
