@@ -1,6 +1,9 @@
 import { useContext, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
+import PreviewIcon from '@mui/icons-material/Preview';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -109,6 +112,7 @@ const Future = () => {
 
 const TracksList = ( props ) => {
   const { tracks } = props
+  const context = useContext(TrackContext)
 
   async function deleteTrack(id) {
     console.log(`deleting track ${id}`)
@@ -119,6 +123,8 @@ const TracksList = ( props ) => {
   }
 
   const renderTrackRow = ( index, track ) => {
+    const isSelected = (context.trackId === track.spotifyId)
+
     return (
       <ListItem
         key={index}
@@ -130,14 +136,21 @@ const TracksList = ( props ) => {
         component="div"
         disablePadding
       >
-        <ListItemText primary={`${track.spotifyId}`} />
+        <ListItemButton onClick={() => context.setTrackId(track.spotifyId)}>
+          {isSelected &&
+          <ListItemIcon>
+            <PreviewIcon />
+          </ListItemIcon>
+          }
+          <ListItemText inset={!isSelected} primary={`${track.spotifyId}`} />
+        </ListItemButton>
       </ListItem>
     )
   }
 
   return (
     <Box
-      sx={{ width: '100%', height: 50, overflow: 'auto', maxWidth: 360, bgcolor: 'background.paper'  }}
+      sx={{ width: '100%', height: 50, overflow: 'auto', maxWidth: 360  }}
     >
       <List>
         {tracks.map((track, index) => renderTrackRow(index, track))}
