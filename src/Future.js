@@ -34,7 +34,16 @@ const Future = () => {
   async function preview() {
     const shortDate = date.toISOString().split('T')[0]
     const scheduledList = await API.graphql(graphqlOperation(listTracks, { filter: {date: {eq: shortDate}} }))
-    const items = scheduledList.data.listTracks.items
+    let items = scheduledList.data.listTracks.items
+    let nextToken = scheduledList.data.listTracks.nextToken
+    while (nextToken !== null) {
+      const s = await API.graphql(graphqlOperation(listTracks, { filter: {date: {eq: shortDate}}, nextToken }))
+      const i = s.data.listTracks.items
+      nextToken = s.data.listTracks.nextToken
+
+      items = items.concat(i)
+    }
+
     if (items.length < 1) {
       setError("No entry for date " + shortDate)
       return
@@ -46,7 +55,16 @@ const Future = () => {
 
   async function loadAllSetDates() {
     const scheduledList = await API.graphql(graphqlOperation(listTracks, { filter: {date: {gt: ""}} }))
-    const items = scheduledList.data.listTracks.items
+    let items = scheduledList.data.listTracks.items
+    let nextToken = scheduledList.data.listTracks.nextToken
+    while (nextToken !== null) {
+      const s = await API.graphql(graphqlOperation(listTracks, { filter: {date: {gt: ""}}, nextToken }))
+      const i = s.data.listTracks.items
+      nextToken = s.data.listTracks.nextToken
+
+      items = items.concat(i)
+    }
+
     if (items.length < 1)
       return
 
@@ -56,7 +74,17 @@ const Future = () => {
 
   async function loadAllUnsetMusic() {
     const unscheduledList = await API.graphql(graphqlOperation(listTracks, { filter: { not: {date: {gt: ""}} }}))
-    const items = unscheduledList.data.listTracks.items
+    let items = unscheduledList.data.listTracks.items
+
+    let nextToken = unscheduledList.data.listTracks.nextToken
+    while (nextToken !== null) {
+      const s = await API.graphql(graphqlOperation(listTracks, { filter: { not: {date: {gt: ""}} }, nextToken }))
+      const i = s.data.listTracks.items
+      nextToken = s.data.listTracks.nextToken
+
+      items = items.concat(i)
+    }
+
     setUnscheduledTracks(items)
   }
 

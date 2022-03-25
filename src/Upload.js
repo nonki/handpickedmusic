@@ -27,7 +27,16 @@ const Upload = () => {
 
   async function uploadTrack(id, date) {
     const tracksList = await API.graphql(graphqlOperation(listTracks, { filter: {spotifyId: {eq: id}} }))
-    const items = tracksList.data.listTracks.items
+    let items = tracksList.data.listTracks.items
+    let nextToken = tracksList.data.listTracks.nextToken
+    while (nextToken !== null) {
+      const s = await API.graphql(graphqlOperation(listTracks, { filter: {spotifyId: {eq: id}}, nextToken }))
+      const i = s.data.listTracks.items
+      nextToken = s.data.listTracks.nextToken
+
+      items = items.concat(i)
+    }
+
     if (items.length > 0) {
       setError("Entry already exists")
       return
@@ -35,7 +44,16 @@ const Upload = () => {
 
     if (date !== null) {
       const scheduledList = await API.graphql(graphqlOperation(listTracks, { filter: {date: {eq: date}} }))
-      const scheduledItems = scheduledList.data.listTracks.items
+      let scheduledItems = scheduledList.data.listTracks.items
+      let nextToken = tracksList.data.listTracks.nextToken
+      while (nextToken !== null) {
+        const s = await API.graphql(graphqlOperation(listTracks, { filter: {date: {eq: date}}, nextToken }))
+        const i = s.data.listTracks.items
+        nextToken = s.data.listTracks.nextToken
+
+        scheduledItems = items.concat(i)
+      }
+
       if (scheduledItems.length > 0) {
         const scheduledItem = scheduledItems.pop()
         console.log(`Unscheduling item ${scheduledItem.id} - ${scheduledItem.spotifyId}`)

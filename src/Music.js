@@ -27,10 +27,7 @@ const Music = () => {
           trackId = dailyTrackData.data.getDailyTrack
         }
 
-        console.log(trackId)
-        console.log(cookies.SPOTIFY_AUTH)
         const enrichedTrack = await API.graphql(graphqlOperation(enrichTrack, {spotifyId: trackId, tokenData: cookies.SPOTIFY_AUTH}))
-        console.log(enrichedTrack)
 
         setTrack(enrichedTrack.data.enrichTrack)
         context.setTrack(enrichedTrack.data.enrichTrack)
