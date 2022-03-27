@@ -51,14 +51,15 @@ const Upload = () => {
         const i = s.data.listTracks.items
         nextToken = s.data.listTracks.nextToken
 
-        scheduledItems = items.concat(i)
+        scheduledItems = scheduledItems.concat(i)
       }
 
       if (scheduledItems.length > 0) {
-        const scheduledItem = scheduledItems.pop()
-        console.log(`Unscheduling item ${scheduledItem.id} - ${scheduledItem.spotifyId}`)
-        await API.graphql(graphqlOperation(updateTrack, { input: { id: scheduledItem.id, date: null } }))
-        setError(`Unscheduled item ${scheduledItem.id} - ${scheduledItem.spotifyId} for ${date}`)
+        await Promise.all(scheduledItems.map(async (scheduledItem) => {
+          console.log(`Unscheduling item ${scheduledItem.id} - ${scheduledItem.spotifyId}`)
+          await API.graphql(graphqlOperation(updateTrack, { input: { id: scheduledItem.id, date: null } }))
+        }))
+        setError(`Unscheduled items ${scheduledItems.map((si) => `${si.id}:${si.spotifyId}`).join(",")} for ${date}`)
         return
       }
     }

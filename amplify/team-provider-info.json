@@ -101,7 +101,7 @@
       "function": {
         "GetDailyMusic": {
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
-          "s3Key": "amplify-builds/GetDailyMusic-624e6663597179346951-build.zip"
+          "s3Key": "amplify-builds/GetDailyMusic-2b597131374130623964-build.zip"
         },
         "EnrichTrack": {
           "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
@@ -110,7 +110,7 @@
         },
         "AlertLowRemainingTrackCount": {
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
-          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-2b6962592f2b76463377-build.zip",
+          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-784838464d44576c786b-build.zip",
           "sendEmail": "yes",
           "topicArn": "arn:aws:sns:eu-central-1:234566038455:sns-topic-handpickedmusic-production"
         },
