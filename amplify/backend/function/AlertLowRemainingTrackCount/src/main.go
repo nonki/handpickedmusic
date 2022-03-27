@@ -25,10 +25,21 @@ type Track struct {
 }
 
 func HandleRequest(ctx context.Context) (string, error) {
-	remainingTracks, err := getRemainingTracks(ctx)
+	remainingTracks, nextToken, err := getRemainingTracks(ctx, nil)
 	if err != nil {
 		sendMessage(fmt.Sprintf("failed checking remaining tracks: %s", err.Error()))
 		return "", err
+	}
+
+	for nextToken != nil {
+		var additionalTracks []Track
+		additionalTracks, nextToken, err = getRemainingTracks(ctx, nextToken)
+		if err != nil {
+			sendMessage(fmt.Sprintf("failed checking remaining tracks: %s", err.Error()))
+			return "", err
+		}
+
+		remainingTracks = append(remainingTracks, additionalTracks...)
 	}
 
 	message := fmt.Sprintf("Unscheduled tracks remaining: %d", len(remainingTracks))
@@ -40,40 +51,43 @@ func HandleRequest(ctx context.Context) (string, error) {
 	return message, nil
 }
 
-func getRemainingTracks(ctx context.Context) ([]Track, error) {
+func getRemainingTracks(ctx context.Context, nextToken *string) ([]Track, *string, error) {
 	client := newGraphqlClient()
 	req := graphql.NewRequest(`
-	query myQuery {
-		listTracks(filter: {date: {notContains: ""}}) {
+	query myQuery ($nextToken: String) {
+		listTracks(filter: {date: {notContains: ""}}, nextToken: $nextToken) {
 			items {
 				id,
 				spotifyId,
 				date,
 			}
+			nextToken	
 		}
 	}
 	`)
 
 	var respData struct {
 		ListTracks struct {
-			Items []Track `json:"items"`
+			Items     []Track `json:"items"`
+			NextToken *string `json:"nextToken"`
 		} `json:"listTracks"`
 	}
 
 	req.Header.Set("X-API-KEY", os.Getenv("API_HANDPICKEDMUSIC_GRAPHQLAPIKEYOUTPUT"))
+	req.Var("nextToken", nextToken)
 
 	if err := client.Run(ctx, req, &respData); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	tracks := respData.ListTracks.Items
+	nextToken = respData.ListTracks.NextToken
 
 	if len(tracks) == 0 {
-		return nil, errors.New("No tracks found")
+		return nil, nextToken, errors.New("No tracks found")
 	}
 
-	return tracks, nil
-
+	return tracks, nextToken, nil
 }
 
 func newGraphqlClient() *graphql.Client {
