@@ -25,21 +25,47 @@ type Track struct {
 // HandleRequest handles a request
 func HandleRequest(ctx context.Context) (string, error) {
 	client := newGraphqlClient()
-	if track, err := getDailyTrack(ctx, client); track != nil {
+	track, nextToken, err := getDailyTrack(ctx, client, nil)
+	if track != nil {
 		return track.SpotifyID, err
 	}
 
-	tracks, err := getAllUnscheduledTracks(ctx, client)
 	if err != nil {
 		return "", err
 	}
 
-	track := getRandomTrack(tracks)
-	if err := setDailyTrack(ctx, client, track); err != nil {
+	for nextToken != nil {
+		track, nextToken, err = getDailyTrack(ctx, client, nextToken)
+		if track != nil {
+			return track.SpotifyID, err
+		}
+
+		if err != nil {
+			return "", err
+		}
+	}
+
+	tracks, nextToken, err := getAllUnscheduledTracks(ctx, client, nil)
+	if err != nil {
 		return "", err
 	}
 
-	return track.SpotifyID, nil
+	for nextToken != nil {
+		var additionalTracks []Track
+		additionalTracks, nextToken, err = getAllUnscheduledTracks(ctx, client, nextToken)
+		if err != nil {
+			return "", err
+		}
+
+		tracks = append(tracks, additionalTracks...)
+	}
+
+	newTrack := getRandomTrack(tracks)
+	if err := setDailyTrack(ctx, client, newTrack); err != nil {
+		return "", err
+	}
+
+	return newTrack.SpotifyID, nil
 }
 
 func newGraphqlClient() *graphql.Client {
@@ -53,38 +79,42 @@ func newGraphqlClient() *graphql.Client {
 	)
 }
 
-func getAllUnscheduledTracks(ctx context.Context, client *graphql.Client) ([]Track, error) {
+func getAllUnscheduledTracks(ctx context.Context, client *graphql.Client, nextToken *string) ([]Track, *string, error) {
 	req := graphql.NewRequest(`
-	query myQuery {
-		listTracks(filter: {date: {notContains: ""}}) {
+	query myQuery ($nextToken: String) {
+		listTracks(filter: {date: {notContains: ""}}, nextToken: $nextToken) {
 			items {
 				id,
 				spotifyId,
 				date,
 			}
+			nextToken
 		}
 	}
 	`)
 
 	var respData struct {
 		ListTracks struct {
-			Items []Track `json:"items"`
+			Items     []Track `json:"items"`
+			NextToken *string `json:"nextToken"`
 		} `json:"listTracks"`
 	}
 
 	req.Header.Set("X-API-KEY", os.Getenv("API_HANDPICKEDMUSIC_GRAPHQLAPIKEYOUTPUT"))
+	req.Var("nextToken", nextToken)
 
 	if err := client.Run(ctx, req, &respData); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	tracks := respData.ListTracks.Items
+	nextToken = respData.ListTracks.NextToken
 
 	if len(tracks) == 0 {
-		return nil, errors.New("No tracks found")
+		return nil, nextToken, errors.New("No tracks found")
 	}
 
-	return tracks, nil
+	return tracks, nextToken, nil
 }
 
 func getRandomTrack(tracks []Track) Track {
@@ -94,42 +124,46 @@ func getRandomTrack(tracks []Track) Track {
 	return tracks[randomIndex]
 }
 
-func getDailyTrack(ctx context.Context, client *graphql.Client) (*Track, error) {
+func getDailyTrack(ctx context.Context, client *graphql.Client, nextToken *string) (*Track, *string, error) {
 	req := graphql.NewRequest(`
-		query myQuery ($date: String!){
-			listTracks(filter: {date: {eq: $date}}) {
+		query myQuery ($date: String!, $nextToken: String){
+			listTracks(filter: {date: {eq: $date}}, nextToken: $nextToken) {
 				items {
 					id,
 					spotifyId,
 					date,
 				}
+				nextToken
 			}
 		}
 	`)
 
 	date := time.Now().Format("2006-01-02")
 	req.Var("date", date)
+	req.Var("nextToken", nextToken)
 
 	var respData struct {
 		ListTracks struct {
-			Items []Track `json:"items"`
+			Items     []Track `json:"items"`
+			NextToken *string `json:"nextToken"`
 		} `json:"listTracks"`
 	}
 
 	req.Header.Set("X-API-KEY", os.Getenv("API_HANDPICKEDMUSIC_GRAPHQLAPIKEYOUTPUT"))
 	if err := client.Run(ctx, req, &respData); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	tracks := respData.ListTracks.Items
+	nextToken = respData.ListTracks.NextToken
 
 	if len(tracks) == 0 {
-		return nil, errors.New("No track found")
+		return nil, nextToken, nil
 	}
 
 	track := tracks[0]
 
-	return &track, nil
+	return &track, nextToken, nil
 }
 
 func setDailyTrack(ctx context.Context, client *graphql.Client, track Track) error {
