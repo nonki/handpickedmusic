@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -84,7 +83,7 @@ func getRemainingTracks(ctx context.Context, nextToken *string) ([]Track, *strin
 	nextToken = respData.ListTracks.NextToken
 
 	if len(tracks) == 0 {
-		return nil, nextToken, errors.New("No tracks found")
+		return nil, nextToken, nil
 	}
 
 	return tracks, nextToken, nil

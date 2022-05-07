@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"errors"
 	"math/rand"
 	"net/http"
 	"os"
@@ -111,7 +110,7 @@ func getAllUnscheduledTracks(ctx context.Context, client *graphql.Client, nextTo
 	nextToken = respData.ListTracks.NextToken
 
 	if len(tracks) == 0 {
-		return nil, nextToken, errors.New("No tracks found")
+		return nil, nextToken, nil
 	}
 
 	return tracks, nextToken, nil
