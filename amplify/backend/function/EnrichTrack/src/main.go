@@ -98,7 +98,15 @@ func enrichTrack(track *spotify.FullTrack) EnrichedTrack {
 		artists = append(artists, v.Name)
 	}
 
-	colorHex, err := prominentColour(track.Album.Images[0].URL)
+	imageURL := track.Album.Images[0].URL
+	for _, img := range track.Album.Images {
+		if img.Height >= 300 {
+			imageURL = img.URL
+			break
+		}
+	}
+
+	colorHex, err := prominentColour(imageURL)
 	if err != nil {
 		colorHex = "FFFFFF"
 	}
@@ -110,7 +118,7 @@ func enrichTrack(track *spotify.FullTrack) EnrichedTrack {
 		TrackName:   track.Name,
 		ArtistName:  strings.Join(artists, " & "),
 		AlbumName:   track.Album.Name,
-		ImageURL:    track.Album.Images[0].URL,
+		ImageURL:    imageURL,
 		PreviewURL:  track.PreviewURL,
 		ExternalURL: track.ExternalURLs["spotify"],
 	}
