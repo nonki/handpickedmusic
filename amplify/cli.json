@@ -9,7 +9,7 @@
       "secondarykeyasgsi": true,
       "skipoverridemutationinputtypes": true,
       "securityEnhancementNotification": false,
-      "showfieldauthnotification": false
+      "showFieldAuthNotification": false
     },
     "frontend-ios": {
       "enablexcodeintegration": true

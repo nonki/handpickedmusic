@@ -21,24 +21,30 @@
       "function": {
         "GetDailyMusic": {
           "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
-          "s3Key": "amplify-builds/GetDailyMusic-624e6663597179346951-build.zip"
+          "s3Key": "amplify-builds/GetDailyMusic-6641414b625772494448-build.zip"
         },
         "EnrichTrack": {
           "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
           "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
-          "s3Key": "amplify-builds/EnrichTrack-45594f46424137633446-build.zip"
+          "s3Key": "amplify-builds/EnrichTrack-36373361577961785a32-build.zip"
         },
         "AlertLowRemainingTrackCount": {
           "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
-          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-4645426f79574a376a31-build.zip",
+          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-6d4462774e2f57363678-build.zip",
           "sendEmail": "no",
           "topicArn": "temp"
         },
         "AuthUser": {
           "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
           "deploymentBucketName": "amplify-handpickedmusic-dev-204151-deployment",
-          "s3Key": "amplify-builds/AuthUser-6d4d5973576362446678-build.zip"
+          "s3Key": "amplify-builds/AuthUser-2f7a53484f4a6b7a6138-build.zip"
         }
+      },
+      "api": {
+        "handpickedmusic": {}
+      },
+      "custom": {
+        "handpickedmusicalerts": {}
       }
     }
   },

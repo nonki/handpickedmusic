@@ -1,91 +1,206 @@
 {
   "api": {
     "handpickedmusic": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
       "output": {
         "authConfig": {
+          "additionalAuthenticationProviders": [],
           "defaultAuthentication": {
-            "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 365,
               "apiKeyExpirationDate": "2022-12-07T13:36:23.527Z",
+              "apiKeyExpirationDays": 365,
               "description": "music api"
-            }
-          },
-          "additionalAuthenticationProviders": []
+            },
+            "authenticationType": "API_KEY"
+          }
         }
-      }
-    }
-  },
-  "hosting": {
-    "amplifyhosting": {
-      "service": "amplifyhosting",
+      },
       "providerPlugin": "awscloudformation",
-      "type": "manual"
-    }
-  },
-  "function": {
-    "GetDailyMusic": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "handpickedmusic",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ]
-        }
-      ]
-    },
-    "EnrichTrack": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": []
-    },
-    "AlertLowRemainingTrackCount": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "handpickedmusic",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ]
-        }
-      ]
-    },
-    "AuthUser": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": []
+      "service": "AppSync"
     }
   },
   "custom": {
     "handpickedmusicalerts": {
-      "service": "customCDK",
-      "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "AlertLowRemainingTrackCount",
           "attributes": [
             "Name",
             "Arn",
             "Region",
             "LambdaExecutionRole",
-            "CloudWatchEventRule"
-          ]
+            "CloudWatchEventRule",
+            "LambdaExecutionRoleArn"
+          ],
+          "category": "function",
+          "resourceName": "AlertLowRemainingTrackCount"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "customCDK"
+    }
+  },
+  "function": {
+    "AlertLowRemainingTrackCount": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "handpickedmusic"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "AuthUser": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "EnrichTrack": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "GetDailyMusic": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "handpickedmusic"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "providerPlugin": "awscloudformation",
+      "service": "amplifyhosting",
+      "type": "manual"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_AlertLowRemainingTrackCount_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AlertLowRemainingTrackCount"
+        }
+      ]
+    },
+    "AMPLIFY_function_AlertLowRemainingTrackCount_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AlertLowRemainingTrackCount"
+        }
+      ]
+    },
+    "AMPLIFY_function_AlertLowRemainingTrackCount_sendEmail": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AlertLowRemainingTrackCount"
+        }
+      ]
+    },
+    "AMPLIFY_function_AlertLowRemainingTrackCount_topicArn": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AlertLowRemainingTrackCount"
+        }
+      ]
+    },
+    "AMPLIFY_function_AuthUser_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AuthUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_AuthUser_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AuthUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_AuthUser_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AuthUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_EnrichTrack_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EnrichTrack"
+        }
+      ]
+    },
+    "AMPLIFY_function_EnrichTrack_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EnrichTrack"
+        }
+      ]
+    },
+    "AMPLIFY_function_EnrichTrack_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EnrichTrack"
+        }
+      ]
+    },
+    "AMPLIFY_function_GetDailyMusic_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "GetDailyMusic"
+        }
+      ]
+    },
+    "AMPLIFY_function_GetDailyMusic_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "GetDailyMusic"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_appId": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_type": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
         }
       ]
     }
