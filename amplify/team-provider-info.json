@@ -107,22 +107,22 @@
       "function": {
         "GetDailyMusic": {
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
-          "s3Key": "amplify-builds/GetDailyMusic-446b6c7a363852516a44-build.zip"
+          "s3Key": "amplify-builds/GetDailyMusic-5a73355a7563304b2f68-build.zip"
         },
         "EnrichTrack": {
           "secretsPathAmplifyAppId": "d2ik45pjro9i5h",
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
-          "s3Key": "amplify-builds/EnrichTrack-7035567a4b32706b4d70-build.zip"
+          "s3Key": "amplify-builds/EnrichTrack-4546576944486855616e-build.zip"
         },
         "AlertLowRemainingTrackCount": {
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
-          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-36744242503042483335-build.zip",
+          "s3Key": "amplify-builds/AlertLowRemainingTrackCount-69663055564d54617631-build.zip",
           "sendEmail": "yes",
           "topicArn": "arn:aws:sns:eu-central-1:234566038455:sns-topic-handpickedmusic-production"
         },
         "AuthUser": {
           "deploymentBucketName": "amplify-handpickedmusic-production-211457-deployment",
-          "s3Key": "amplify-builds/AuthUser-566e7365486f674b4c34-build.zip",
+          "s3Key": "amplify-builds/AuthUser-644d2f5742316b594974-build.zip",
           "secretsPathAmplifyAppId": "d2ik45pjro9i5h"
         }
       },
@@ -131,6 +131,12 @@
           "appId": "d2ik45pjro9i5h",
           "type": "manual"
         }
+      },
+      "api": {
+        "handpickedmusic": {}
+      },
+      "custom": {
+        "handpickedmusicalerts": {}
       }
     }
   }
